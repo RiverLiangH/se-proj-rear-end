@@ -1,0 +1,679 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.evan.seprojrearend.mapper.LiteratureMapper">
+  <resultMap id="BaseResultMap" type="com.evan.seprojrearend.po.Literature">
+    <id column="LITERATURE_ID" jdbcType="DECIMAL" property="literatureId" />
+    <id column="SCHOOL_ID" jdbcType="DECIMAL" property="schoolId" />
+    <result column="AUTO_INCREMENT_NAME" jdbcType="VARCHAR" property="autoIncrementName" />
+    <result column="EXPERIMENT_ID" jdbcType="DECIMAL" property="experimentId" />
+    <result column="MARK" jdbcType="DECIMAL" property="mark" />
+    <result column="LITERTURE_ADDRESS" jdbcType="VARCHAR" property="litertureAddress" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    LITERATURE_ID, SCHOOL_ID, AUTO_INCREMENT_NAME, EXPERIMENT_ID, MARK, LITERTURE_ADDRESS
+  </sql>
+  <select id="selectByExample" parameterType="com.evan.seprojrearend.po.LiteratureExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from LITERATURE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.evan.seprojrearend.po.LiteratureKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from LITERATURE
+    where LITERATURE_ID = #{literatureId,jdbcType=DECIMAL}
+      and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.evan.seprojrearend.po.LiteratureKey">
+    delete from LITERATURE
+    where LITERATURE_ID = #{literatureId,jdbcType=DECIMAL}
+      and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.evan.seprojrearend.po.LiteratureExample">
+    delete from LITERATURE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.evan.seprojrearend.po.Literature">
+    insert into LITERATURE (LITERATURE_ID, SCHOOL_ID, AUTO_INCREMENT_NAME, 
+      EXPERIMENT_ID, MARK, LITERTURE_ADDRESS
+      )
+    values (#{literatureId,jdbcType=DECIMAL}, #{schoolId,jdbcType=DECIMAL}, #{autoIncrementName,jdbcType=VARCHAR}, 
+      #{experimentId,jdbcType=DECIMAL}, #{mark,jdbcType=DECIMAL}, #{litertureAddress,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.evan.seprojrearend.po.Literature">
+    insert into LITERATURE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="literatureId != null">
+        LITERATURE_ID,
+      </if>
+      <if test="schoolId != null">
+        SCHOOL_ID,
+      </if>
+      <if test="autoIncrementName != null">
+        AUTO_INCREMENT_NAME,
+      </if>
+      <if test="experimentId != null">
+        EXPERIMENT_ID,
+      </if>
+      <if test="mark != null">
+        MARK,
+      </if>
+      <if test="litertureAddress != null">
+        LITERTURE_ADDRESS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="literatureId != null">
+        #{literatureId,jdbcType=DECIMAL},
+      </if>
+      <if test="schoolId != null">
+        #{schoolId,jdbcType=DECIMAL},
+      </if>
+      <if test="autoIncrementName != null">
+        #{autoIncrementName,jdbcType=VARCHAR},
+      </if>
+      <if test="experimentId != null">
+        #{experimentId,jdbcType=DECIMAL},
+      </if>
+      <if test="mark != null">
+        #{mark,jdbcType=DECIMAL},
+      </if>
+      <if test="litertureAddress != null">
+        #{litertureAddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.evan.seprojrearend.po.LiteratureExample" resultType="java.lang.Long">
+    select count(*) from LITERATURE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update LITERATURE
+    <set>
+      <if test="record.literatureId != null">
+        LITERATURE_ID = #{record.literatureId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.schoolId != null">
+        SCHOOL_ID = #{record.schoolId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.autoIncrementName != null">
+        AUTO_INCREMENT_NAME = #{record.autoIncrementName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.experimentId != null">
+        EXPERIMENT_ID = #{record.experimentId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.mark != null">
+        MARK = #{record.mark,jdbcType=DECIMAL},
+      </if>
+      <if test="record.litertureAddress != null">
+        LITERTURE_ADDRESS = #{record.litertureAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update LITERATURE
+    set LITERATURE_ID = #{record.literatureId,jdbcType=DECIMAL},
+      SCHOOL_ID = #{record.schoolId,jdbcType=DECIMAL},
+      AUTO_INCREMENT_NAME = #{record.autoIncrementName,jdbcType=VARCHAR},
+      EXPERIMENT_ID = #{record.experimentId,jdbcType=DECIMAL},
+      MARK = #{record.mark,jdbcType=DECIMAL},
+      LITERTURE_ADDRESS = #{record.litertureAddress,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.evan.seprojrearend.po.Literature">
+    update LITERATURE
+    <set>
+      <if test="autoIncrementName != null">
+        AUTO_INCREMENT_NAME = #{autoIncrementName,jdbcType=VARCHAR},
+      </if>
+      <if test="experimentId != null">
+        EXPERIMENT_ID = #{experimentId,jdbcType=DECIMAL},
+      </if>
+      <if test="mark != null">
+        MARK = #{mark,jdbcType=DECIMAL},
+      </if>
+      <if test="litertureAddress != null">
+        LITERTURE_ADDRESS = #{litertureAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where LITERATURE_ID = #{literatureId,jdbcType=DECIMAL}
+      and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.evan.seprojrearend.po.Literature">
+    update LITERATURE
+    set AUTO_INCREMENT_NAME = #{autoIncrementName,jdbcType=VARCHAR},
+      EXPERIMENT_ID = #{experimentId,jdbcType=DECIMAL},
+      MARK = #{mark,jdbcType=DECIMAL},
+      LITERTURE_ADDRESS = #{litertureAddress,jdbcType=VARCHAR}
+    where LITERATURE_ID = #{literatureId,jdbcType=DECIMAL}
+      and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
+  </update>
+  <resultMap id="BaseResultMap" type="com.evan.seprojrearend.po.Literature">
+    <id column="LITERATURE_ID" jdbcType="DECIMAL" property="literatureId" />
+    <id column="SCHOOL_ID" jdbcType="DECIMAL" property="schoolId" />
+    <result column="AUTO_INCREMENT_NAME" jdbcType="VARCHAR" property="autoIncrementName" />
+    <result column="EXPERIMENT_ID" jdbcType="DECIMAL" property="experimentId" />
+    <result column="MARK" jdbcType="DECIMAL" property="mark" />
+    <result column="LITERTURE_ADDRESS" jdbcType="VARCHAR" property="litertureAddress" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    LITERATURE_ID, SCHOOL_ID, AUTO_INCREMENT_NAME, EXPERIMENT_ID, MARK, LITERTURE_ADDRESS
+  </sql>
+  <select id="selectByExample" parameterType="com.evan.seprojrearend.po.LiteratureExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from LITERATURE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.evan.seprojrearend.po.LiteratureKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from LITERATURE
+    where LITERATURE_ID = #{literatureId,jdbcType=DECIMAL}
+      and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.evan.seprojrearend.po.LiteratureKey">
+    delete from LITERATURE
+    where LITERATURE_ID = #{literatureId,jdbcType=DECIMAL}
+      and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.evan.seprojrearend.po.LiteratureExample">
+    delete from LITERATURE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.evan.seprojrearend.po.Literature">
+    insert into LITERATURE (LITERATURE_ID, SCHOOL_ID, AUTO_INCREMENT_NAME, 
+      EXPERIMENT_ID, MARK, LITERTURE_ADDRESS
+      )
+    values (#{literatureId,jdbcType=DECIMAL}, #{schoolId,jdbcType=DECIMAL}, #{autoIncrementName,jdbcType=VARCHAR}, 
+      #{experimentId,jdbcType=DECIMAL}, #{mark,jdbcType=DECIMAL}, #{litertureAddress,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.evan.seprojrearend.po.Literature">
+    insert into LITERATURE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="literatureId != null">
+        LITERATURE_ID,
+      </if>
+      <if test="schoolId != null">
+        SCHOOL_ID,
+      </if>
+      <if test="autoIncrementName != null">
+        AUTO_INCREMENT_NAME,
+      </if>
+      <if test="experimentId != null">
+        EXPERIMENT_ID,
+      </if>
+      <if test="mark != null">
+        MARK,
+      </if>
+      <if test="litertureAddress != null">
+        LITERTURE_ADDRESS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="literatureId != null">
+        #{literatureId,jdbcType=DECIMAL},
+      </if>
+      <if test="schoolId != null">
+        #{schoolId,jdbcType=DECIMAL},
+      </if>
+      <if test="autoIncrementName != null">
+        #{autoIncrementName,jdbcType=VARCHAR},
+      </if>
+      <if test="experimentId != null">
+        #{experimentId,jdbcType=DECIMAL},
+      </if>
+      <if test="mark != null">
+        #{mark,jdbcType=DECIMAL},
+      </if>
+      <if test="litertureAddress != null">
+        #{litertureAddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.evan.seprojrearend.po.LiteratureExample" resultType="java.lang.Long">
+    select count(*) from LITERATURE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update LITERATURE
+    <set>
+      <if test="record.literatureId != null">
+        LITERATURE_ID = #{record.literatureId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.schoolId != null">
+        SCHOOL_ID = #{record.schoolId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.autoIncrementName != null">
+        AUTO_INCREMENT_NAME = #{record.autoIncrementName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.experimentId != null">
+        EXPERIMENT_ID = #{record.experimentId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.mark != null">
+        MARK = #{record.mark,jdbcType=DECIMAL},
+      </if>
+      <if test="record.litertureAddress != null">
+        LITERTURE_ADDRESS = #{record.litertureAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update LITERATURE
+    set LITERATURE_ID = #{record.literatureId,jdbcType=DECIMAL},
+      SCHOOL_ID = #{record.schoolId,jdbcType=DECIMAL},
+      AUTO_INCREMENT_NAME = #{record.autoIncrementName,jdbcType=VARCHAR},
+      EXPERIMENT_ID = #{record.experimentId,jdbcType=DECIMAL},
+      MARK = #{record.mark,jdbcType=DECIMAL},
+      LITERTURE_ADDRESS = #{record.litertureAddress,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.evan.seprojrearend.po.Literature">
+    update LITERATURE
+    <set>
+      <if test="autoIncrementName != null">
+        AUTO_INCREMENT_NAME = #{autoIncrementName,jdbcType=VARCHAR},
+      </if>
+      <if test="experimentId != null">
+        EXPERIMENT_ID = #{experimentId,jdbcType=DECIMAL},
+      </if>
+      <if test="mark != null">
+        MARK = #{mark,jdbcType=DECIMAL},
+      </if>
+      <if test="litertureAddress != null">
+        LITERTURE_ADDRESS = #{litertureAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where LITERATURE_ID = #{literatureId,jdbcType=DECIMAL}
+      and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.evan.seprojrearend.po.Literature">
+    update LITERATURE
+    set AUTO_INCREMENT_NAME = #{autoIncrementName,jdbcType=VARCHAR},
+      EXPERIMENT_ID = #{experimentId,jdbcType=DECIMAL},
+      MARK = #{mark,jdbcType=DECIMAL},
+      LITERTURE_ADDRESS = #{litertureAddress,jdbcType=VARCHAR}
+    where LITERATURE_ID = #{literatureId,jdbcType=DECIMAL}
+      and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
+  </update>
+  <resultMap id="BaseResultMap" type="com.evan.seprojrearend.po.Literature">
+    <id column="LITERATURE_ID" jdbcType="DECIMAL" property="literatureId" />
+    <id column="SCHOOL_ID" jdbcType="DECIMAL" property="schoolId" />
+    <result column="AUTO_INCREMENT_NAME" jdbcType="VARCHAR" property="autoIncrementName" />
+    <result column="EXPERIMENT_ID" jdbcType="DECIMAL" property="experimentId" />
+    <result column="MARK" jdbcType="DECIMAL" property="mark" />
+    <result column="LITERTURE_ADDRESS" jdbcType="VARCHAR" property="litertureAddress" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    LITERATURE_ID, SCHOOL_ID, AUTO_INCREMENT_NAME, EXPERIMENT_ID, MARK, LITERTURE_ADDRESS
+  </sql>
+  <select id="selectByExample" parameterType="com.evan.seprojrearend.po.LiteratureExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from LITERATURE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.evan.seprojrearend.po.LiteratureKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from LITERATURE
+    where LITERATURE_ID = #{literatureId,jdbcType=DECIMAL}
+      and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.evan.seprojrearend.po.LiteratureKey">
+    delete from LITERATURE
+    where LITERATURE_ID = #{literatureId,jdbcType=DECIMAL}
+      and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.evan.seprojrearend.po.LiteratureExample">
+    delete from LITERATURE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.evan.seprojrearend.po.Literature">
+    insert into LITERATURE (LITERATURE_ID, SCHOOL_ID, AUTO_INCREMENT_NAME, 
+      EXPERIMENT_ID, MARK, LITERTURE_ADDRESS
+      )
+    values (#{literatureId,jdbcType=DECIMAL}, #{schoolId,jdbcType=DECIMAL}, #{autoIncrementName,jdbcType=VARCHAR}, 
+      #{experimentId,jdbcType=DECIMAL}, #{mark,jdbcType=DECIMAL}, #{litertureAddress,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.evan.seprojrearend.po.Literature">
+    insert into LITERATURE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="literatureId != null">
+        LITERATURE_ID,
+      </if>
+      <if test="schoolId != null">
+        SCHOOL_ID,
+      </if>
+      <if test="autoIncrementName != null">
+        AUTO_INCREMENT_NAME,
+      </if>
+      <if test="experimentId != null">
+        EXPERIMENT_ID,
+      </if>
+      <if test="mark != null">
+        MARK,
+      </if>
+      <if test="litertureAddress != null">
+        LITERTURE_ADDRESS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="literatureId != null">
+        #{literatureId,jdbcType=DECIMAL},
+      </if>
+      <if test="schoolId != null">
+        #{schoolId,jdbcType=DECIMAL},
+      </if>
+      <if test="autoIncrementName != null">
+        #{autoIncrementName,jdbcType=VARCHAR},
+      </if>
+      <if test="experimentId != null">
+        #{experimentId,jdbcType=DECIMAL},
+      </if>
+      <if test="mark != null">
+        #{mark,jdbcType=DECIMAL},
+      </if>
+      <if test="litertureAddress != null">
+        #{litertureAddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.evan.seprojrearend.po.LiteratureExample" resultType="java.lang.Long">
+    select count(*) from LITERATURE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update LITERATURE
+    <set>
+      <if test="record.literatureId != null">
+        LITERATURE_ID = #{record.literatureId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.schoolId != null">
+        SCHOOL_ID = #{record.schoolId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.autoIncrementName != null">
+        AUTO_INCREMENT_NAME = #{record.autoIncrementName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.experimentId != null">
+        EXPERIMENT_ID = #{record.experimentId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.mark != null">
+        MARK = #{record.mark,jdbcType=DECIMAL},
+      </if>
+      <if test="record.litertureAddress != null">
+        LITERTURE_ADDRESS = #{record.litertureAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update LITERATURE
+    set LITERATURE_ID = #{record.literatureId,jdbcType=DECIMAL},
+      SCHOOL_ID = #{record.schoolId,jdbcType=DECIMAL},
+      AUTO_INCREMENT_NAME = #{record.autoIncrementName,jdbcType=VARCHAR},
+      EXPERIMENT_ID = #{record.experimentId,jdbcType=DECIMAL},
+      MARK = #{record.mark,jdbcType=DECIMAL},
+      LITERTURE_ADDRESS = #{record.litertureAddress,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.evan.seprojrearend.po.Literature">
+    update LITERATURE
+    <set>
+      <if test="autoIncrementName != null">
+        AUTO_INCREMENT_NAME = #{autoIncrementName,jdbcType=VARCHAR},
+      </if>
+      <if test="experimentId != null">
+        EXPERIMENT_ID = #{experimentId,jdbcType=DECIMAL},
+      </if>
+      <if test="mark != null">
+        MARK = #{mark,jdbcType=DECIMAL},
+      </if>
+      <if test="litertureAddress != null">
+        LITERTURE_ADDRESS = #{litertureAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where LITERATURE_ID = #{literatureId,jdbcType=DECIMAL}
+      and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.evan.seprojrearend.po.Literature">
+    update LITERATURE
+    set AUTO_INCREMENT_NAME = #{autoIncrementName,jdbcType=VARCHAR},
+      EXPERIMENT_ID = #{experimentId,jdbcType=DECIMAL},
+      MARK = #{mark,jdbcType=DECIMAL},
+      LITERTURE_ADDRESS = #{litertureAddress,jdbcType=VARCHAR}
+    where LITERATURE_ID = #{literatureId,jdbcType=DECIMAL}
+      and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
+  </update>
+</mapper>

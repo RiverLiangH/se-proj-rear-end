@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.evan.seprojrearend.mapper.ExperimentMapper">
+  <resultMap id="BaseResultMap" type="com.evan.seprojrearend.po.Experiment">
+    <id column="EXPERIMENT_ID" jdbcType="DECIMAL" property="experimentId" />
+    <id column="SCHOOL_ID" jdbcType="DECIMAL" property="schoolId" />
+    <result column="EXPERIMENT_NAME" jdbcType="VARCHAR" property="experimentName" />
+    <result column="SECTION_ID" jdbcType="DECIMAL" property="sectionId" />
+    <result column="TEACHER_ID" jdbcType="DECIMAL" property="teacherId" />
+    <result column="IS_DELETED" jdbcType="DECIMAL" property="isDeleted" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.evan.seprojrearend.po.Experiment">
+    <result column="EXPERIMENT_CONTEXT" jdbcType="CLOB" property="experimentContext" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    EXPERIMENT_ID, SCHOOL_ID, EXPERIMENT_NAME, SECTION_ID, TEACHER_ID, IS_DELETED
+  </sql>
+  <sql id="Blob_Column_List">
+    EXPERIMENT_CONTEXT
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.evan.seprojrearend.po.ExperimentExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from EXPERIMENT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.evan.seprojrearend.po.ExperimentExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from EXPERIMENT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.evan.seprojrearend.po.ExperimentKey" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from EXPERIMENT
+    where EXPERIMENT_ID = #{experimentId,jdbcType=DECIMAL}
+      and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.evan.seprojrearend.po.ExperimentKey">
+    delete from EXPERIMENT
+    where EXPERIMENT_ID = #{experimentId,jdbcType=DECIMAL}
+      and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.evan.seprojrearend.po.ExperimentExample">
+    delete from EXPERIMENT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.evan.seprojrearend.po.Experiment">
+    insert into EXPERIMENT (EXPERIMENT_ID, SCHOOL_ID, EXPERIMENT_NAME, 
+      SECTION_ID, TEACHER_ID, IS_DELETED, 
+      EXPERIMENT_CONTEXT)
+    values (#{experimentId,jdbcType=DECIMAL}, #{schoolId,jdbcType=DECIMAL}, #{experimentName,jdbcType=VARCHAR}, 
+      #{sectionId,jdbcType=DECIMAL}, #{teacherId,jdbcType=DECIMAL}, #{isDeleted,jdbcType=DECIMAL}, 
+      #{experimentContext,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.evan.seprojrearend.po.Experiment">
+    insert into EXPERIMENT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="experimentId != null">
+        EXPERIMENT_ID,
+      </if>
+      <if test="schoolId != null">
+        SCHOOL_ID,
+      </if>
+      <if test="experimentName != null">
+        EXPERIMENT_NAME,
+      </if>
+      <if test="sectionId != null">
+        SECTION_ID,
+      </if>
+      <if test="teacherId != null">
+        TEACHER_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="experimentContext != null">
+        EXPERIMENT_CONTEXT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="experimentId != null">
+        #{experimentId,jdbcType=DECIMAL},
+      </if>
+      <if test="schoolId != null">
+        #{schoolId,jdbcType=DECIMAL},
+      </if>
+      <if test="experimentName != null">
+        #{experimentName,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionId != null">
+        #{sectionId,jdbcType=DECIMAL},
+      </if>
+      <if test="teacherId != null">
+        #{teacherId,jdbcType=DECIMAL},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=DECIMAL},
+      </if>
+      <if test="experimentContext != null">
+        #{experimentContext,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.evan.seprojrearend.po.ExperimentExample" resultType="java.lang.Long">
+    select count(*) from EXPERIMENT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update EXPERIMENT
+    <set>
+      <if test="record.experimentId != null">
+        EXPERIMENT_ID = #{record.experimentId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.schoolId != null">
+        SCHOOL_ID = #{record.schoolId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.experimentName != null">
+        EXPERIMENT_NAME = #{record.experimentName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sectionId != null">
+        SECTION_ID = #{record.sectionId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.teacherId != null">
+        TEACHER_ID = #{record.teacherId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isDeleted != null">
+        IS_DELETED = #{record.isDeleted,jdbcType=DECIMAL},
+      </if>
+      <if test="record.experimentContext != null">
+        EXPERIMENT_CONTEXT = #{record.experimentContext,jdbcType=CLOB},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update EXPERIMENT
+    set EXPERIMENT_ID = #{record.experimentId,jdbcType=DECIMAL},
+      SCHOOL_ID = #{record.schoolId,jdbcType=DECIMAL},
+      EXPERIMENT_NAME = #{record.experimentName,jdbcType=VARCHAR},
+      SECTION_ID = #{record.sectionId,jdbcType=DECIMAL},
+      TEACHER_ID = #{record.teacherId,jdbcType=DECIMAL},
+      IS_DELETED = #{record.isDeleted,jdbcType=DECIMAL},
+      EXPERIMENT_CONTEXT = #{record.experimentContext,jdbcType=CLOB}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update EXPERIMENT
+    set EXPERIMENT_ID = #{record.experimentId,jdbcType=DECIMAL},
+      SCHOOL_ID = #{record.schoolId,jdbcType=DECIMAL},
+      EXPERIMENT_NAME = #{record.experimentName,jdbcType=VARCHAR},
+      SECTION_ID = #{record.sectionId,jdbcType=DECIMAL},
+      TEACHER_ID = #{record.teacherId,jdbcType=DECIMAL},
+      IS_DELETED = #{record.isDeleted,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.evan.seprojrearend.po.Experiment">
+    update EXPERIMENT
+    <set>
+      <if test="experimentName != null">
+        EXPERIMENT_NAME = #{experimentName,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionId != null">
+        SECTION_ID = #{sectionId,jdbcType=DECIMAL},
+      </if>
+      <if test="teacherId != null">
+        TEACHER_ID = #{teacherId,jdbcType=DECIMAL},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=DECIMAL},
+      </if>
+      <if test="experimentContext != null">
+        EXPERIMENT_CONTEXT = #{experimentContext,jdbcType=CLOB},
+      </if>
+    </set>
+    where EXPERIMENT_ID = #{experimentId,jdbcType=DECIMAL}
+      and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.evan.seprojrearend.po.Experiment">
+    update EXPERIMENT
+    set EXPERIMENT_NAME = #{experimentName,jdbcType=VARCHAR},
+      SECTION_ID = #{sectionId,jdbcType=DECIMAL},
+      TEACHER_ID = #{teacherId,jdbcType=DECIMAL},
+      IS_DELETED = #{isDeleted,jdbcType=DECIMAL},
+      EXPERIMENT_CONTEXT = #{experimentContext,jdbcType=CLOB}
+    where EXPERIMENT_ID = #{experimentId,jdbcType=DECIMAL}
+      and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.evan.seprojrearend.po.Experiment">
+    update EXPERIMENT
+    set EXPERIMENT_NAME = #{experimentName,jdbcType=VARCHAR},
+      SECTION_ID = #{sectionId,jdbcType=DECIMAL},
+      TEACHER_ID = #{teacherId,jdbcType=DECIMAL},
+      IS_DELETED = #{isDeleted,jdbcType=DECIMAL}
+    where EXPERIMENT_ID = #{experimentId,jdbcType=DECIMAL}
+      and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
+  </update>
+</mapper>

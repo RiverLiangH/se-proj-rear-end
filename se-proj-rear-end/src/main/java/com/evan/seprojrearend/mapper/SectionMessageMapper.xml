@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.evan.seprojrearend.mapper.SectionMessageMapper">
+  <resultMap id="BaseResultMap" type="com.evan.seprojrearend.po.SectionMessageKey">
+    <id column="SECTION_ID" jdbcType="DECIMAL" property="sectionId" />
+    <id column="MES_ID" jdbcType="DECIMAL" property="mesId" />
+    <id column="SCHOOL_ID" jdbcType="DECIMAL" property="schoolId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    SECTION_ID, MES_ID, SCHOOL_ID
+  </sql>
+  <select id="selectByExample" parameterType="com.evan.seprojrearend.po.SectionMessageExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from SECTION_MESSAGE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.evan.seprojrearend.po.SectionMessageKey">
+    delete from SECTION_MESSAGE
+    where SECTION_ID = #{sectionId,jdbcType=DECIMAL}
+      and MES_ID = #{mesId,jdbcType=DECIMAL}
+      and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.evan.seprojrearend.po.SectionMessageExample">
+    delete from SECTION_MESSAGE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.evan.seprojrearend.po.SectionMessageKey">
+    insert into SECTION_MESSAGE (SECTION_ID, MES_ID, SCHOOL_ID
+      )
+    values (#{sectionId,jdbcType=DECIMAL}, #{mesId,jdbcType=DECIMAL}, #{schoolId,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.evan.seprojrearend.po.SectionMessageKey">
+    insert into SECTION_MESSAGE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sectionId != null">
+        SECTION_ID,
+      </if>
+      <if test="mesId != null">
+        MES_ID,
+      </if>
+      <if test="schoolId != null">
+        SCHOOL_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sectionId != null">
+        #{sectionId,jdbcType=DECIMAL},
+      </if>
+      <if test="mesId != null">
+        #{mesId,jdbcType=DECIMAL},
+      </if>
+      <if test="schoolId != null">
+        #{schoolId,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.evan.seprojrearend.po.SectionMessageExample" resultType="java.lang.Long">
+    select count(*) from SECTION_MESSAGE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update SECTION_MESSAGE
+    <set>
+      <if test="record.sectionId != null">
+        SECTION_ID = #{record.sectionId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.mesId != null">
+        MES_ID = #{record.mesId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.schoolId != null">
+        SCHOOL_ID = #{record.schoolId,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update SECTION_MESSAGE
+    set SECTION_ID = #{record.sectionId,jdbcType=DECIMAL},
+      MES_ID = #{record.mesId,jdbcType=DECIMAL},
+      SCHOOL_ID = #{record.schoolId,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
