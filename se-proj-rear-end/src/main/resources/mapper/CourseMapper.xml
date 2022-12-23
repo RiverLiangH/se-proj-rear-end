@@ -7,6 +7,7 @@
     <result column="COURSE_NAME" jdbcType="VARCHAR" property="courseName" />
     <result column="RES_TEACHER_ID" jdbcType="DECIMAL" property="resTeacherId" />
     <result column="IS_DELETED" jdbcType="DECIMAL" property="isDeleted" />
+    <result column="COURSE_OUTLINE" jdbcType="VARCHAR" property="courseOutline" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    COURSE_ID, SCHOOL_ID, COURSE_NAME, RES_TEACHER_ID, IS_DELETED
+    COURSE_ID, SCHOOL_ID, COURSE_NAME, RES_TEACHER_ID, IS_DELETED, COURSE_OUTLINE
   </sql>
   <select id="selectByExample" parameterType="com.evan.seprojrearend.po.CourseExample" resultMap="BaseResultMap">
     select
@@ -104,9 +105,11 @@
   </delete>
   <insert id="insert" parameterType="com.evan.seprojrearend.po.Course">
     insert into COURSE (COURSE_ID, SCHOOL_ID, COURSE_NAME, 
-      RES_TEACHER_ID, IS_DELETED)
+      RES_TEACHER_ID, IS_DELETED, COURSE_OUTLINE
+      )
     values (#{courseId,jdbcType=DECIMAL}, #{schoolId,jdbcType=DECIMAL}, #{courseName,jdbcType=VARCHAR}, 
-      #{resTeacherId,jdbcType=DECIMAL}, #{isDeleted,jdbcType=DECIMAL})
+      #{resTeacherId,jdbcType=DECIMAL}, #{isDeleted,jdbcType=DECIMAL}, #{courseOutline,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.evan.seprojrearend.po.Course">
     insert into COURSE
@@ -126,6 +129,9 @@
       <if test="isDeleted != null">
         IS_DELETED,
       </if>
+      <if test="courseOutline != null">
+        COURSE_OUTLINE,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="courseId != null">
@@ -142,6 +148,9 @@
       </if>
       <if test="isDeleted != null">
         #{isDeleted,jdbcType=DECIMAL},
+      </if>
+      <if test="courseOutline != null">
+        #{courseOutline,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -169,6 +178,9 @@
       <if test="record.isDeleted != null">
         IS_DELETED = #{record.isDeleted,jdbcType=DECIMAL},
       </if>
+      <if test="record.courseOutline != null">
+        COURSE_OUTLINE = #{record.courseOutline,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -180,7 +192,8 @@
       SCHOOL_ID = #{record.schoolId,jdbcType=DECIMAL},
       COURSE_NAME = #{record.courseName,jdbcType=VARCHAR},
       RES_TEACHER_ID = #{record.resTeacherId,jdbcType=DECIMAL},
-      IS_DELETED = #{record.isDeleted,jdbcType=DECIMAL}
+      IS_DELETED = #{record.isDeleted,jdbcType=DECIMAL},
+      COURSE_OUTLINE = #{record.courseOutline,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -197,213 +210,8 @@
       <if test="isDeleted != null">
         IS_DELETED = #{isDeleted,jdbcType=DECIMAL},
       </if>
-    </set>
-    where COURSE_ID = #{courseId,jdbcType=DECIMAL}
-      and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.evan.seprojrearend.po.Course">
-    update COURSE
-    set COURSE_NAME = #{courseName,jdbcType=VARCHAR},
-      RES_TEACHER_ID = #{resTeacherId,jdbcType=DECIMAL},
-      IS_DELETED = #{isDeleted,jdbcType=DECIMAL}
-    where COURSE_ID = #{courseId,jdbcType=DECIMAL}
-      and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
-  </update>
-  <resultMap id="BaseResultMap" type="com.evan.seprojrearend.po.Course">
-    <id column="COURSE_ID" jdbcType="DECIMAL" property="courseId" />
-    <id column="SCHOOL_ID" jdbcType="DECIMAL" property="schoolId" />
-    <result column="COURSE_NAME" jdbcType="VARCHAR" property="courseName" />
-    <result column="RES_TEACHER_ID" jdbcType="DECIMAL" property="resTeacherId" />
-    <result column="IS_DELETED" jdbcType="DECIMAL" property="isDeleted" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    COURSE_ID, SCHOOL_ID, COURSE_NAME, RES_TEACHER_ID, IS_DELETED
-  </sql>
-  <select id="selectByExample" parameterType="com.evan.seprojrearend.po.CourseExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    'true' as QUERYID,
-    <include refid="Base_Column_List" />
-    from COURSE
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="com.evan.seprojrearend.po.CourseKey" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from COURSE
-    where COURSE_ID = #{courseId,jdbcType=DECIMAL}
-      and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="com.evan.seprojrearend.po.CourseKey">
-    delete from COURSE
-    where COURSE_ID = #{courseId,jdbcType=DECIMAL}
-      and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.evan.seprojrearend.po.CourseExample">
-    delete from COURSE
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.evan.seprojrearend.po.Course">
-    insert into COURSE (COURSE_ID, SCHOOL_ID, COURSE_NAME, 
-      RES_TEACHER_ID, IS_DELETED)
-    values (#{courseId,jdbcType=DECIMAL}, #{schoolId,jdbcType=DECIMAL}, #{courseName,jdbcType=VARCHAR}, 
-      #{resTeacherId,jdbcType=DECIMAL}, #{isDeleted,jdbcType=DECIMAL})
-  </insert>
-  <insert id="insertSelective" parameterType="com.evan.seprojrearend.po.Course">
-    insert into COURSE
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="courseId != null">
-        COURSE_ID,
-      </if>
-      <if test="schoolId != null">
-        SCHOOL_ID,
-      </if>
-      <if test="courseName != null">
-        COURSE_NAME,
-      </if>
-      <if test="resTeacherId != null">
-        RES_TEACHER_ID,
-      </if>
-      <if test="isDeleted != null">
-        IS_DELETED,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="courseId != null">
-        #{courseId,jdbcType=DECIMAL},
-      </if>
-      <if test="schoolId != null">
-        #{schoolId,jdbcType=DECIMAL},
-      </if>
-      <if test="courseName != null">
-        #{courseName,jdbcType=VARCHAR},
-      </if>
-      <if test="resTeacherId != null">
-        #{resTeacherId,jdbcType=DECIMAL},
-      </if>
-      <if test="isDeleted != null">
-        #{isDeleted,jdbcType=DECIMAL},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.evan.seprojrearend.po.CourseExample" resultType="java.lang.Long">
-    select count(*) from COURSE
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update COURSE
-    <set>
-      <if test="record.courseId != null">
-        COURSE_ID = #{record.courseId,jdbcType=DECIMAL},
-      </if>
-      <if test="record.schoolId != null">
-        SCHOOL_ID = #{record.schoolId,jdbcType=DECIMAL},
-      </if>
-      <if test="record.courseName != null">
-        COURSE_NAME = #{record.courseName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.resTeacherId != null">
-        RES_TEACHER_ID = #{record.resTeacherId,jdbcType=DECIMAL},
-      </if>
-      <if test="record.isDeleted != null">
-        IS_DELETED = #{record.isDeleted,jdbcType=DECIMAL},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update COURSE
-    set COURSE_ID = #{record.courseId,jdbcType=DECIMAL},
-      SCHOOL_ID = #{record.schoolId,jdbcType=DECIMAL},
-      COURSE_NAME = #{record.courseName,jdbcType=VARCHAR},
-      RES_TEACHER_ID = #{record.resTeacherId,jdbcType=DECIMAL},
-      IS_DELETED = #{record.isDeleted,jdbcType=DECIMAL}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.evan.seprojrearend.po.Course">
-    update COURSE
-    <set>
-      <if test="courseName != null">
-        COURSE_NAME = #{courseName,jdbcType=VARCHAR},
-      </if>
-      <if test="resTeacherId != null">
-        RES_TEACHER_ID = #{resTeacherId,jdbcType=DECIMAL},
-      </if>
-      <if test="isDeleted != null">
-        IS_DELETED = #{isDeleted,jdbcType=DECIMAL},
+      <if test="courseOutline != null">
+        COURSE_OUTLINE = #{courseOutline,jdbcType=VARCHAR},
       </if>
     </set>
     where COURSE_ID = #{courseId,jdbcType=DECIMAL}
@@ -413,215 +221,8 @@
     update COURSE
     set COURSE_NAME = #{courseName,jdbcType=VARCHAR},
       RES_TEACHER_ID = #{resTeacherId,jdbcType=DECIMAL},
-      IS_DELETED = #{isDeleted,jdbcType=DECIMAL}
-    where COURSE_ID = #{courseId,jdbcType=DECIMAL}
-      and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
-  </update>
-  <resultMap id="BaseResultMap" type="com.evan.seprojrearend.po.Course">
-    <id column="COURSE_ID" jdbcType="DECIMAL" property="courseId" />
-    <id column="SCHOOL_ID" jdbcType="DECIMAL" property="schoolId" />
-    <result column="COURSE_NAME" jdbcType="VARCHAR" property="courseName" />
-    <result column="RES_TEACHER_ID" jdbcType="DECIMAL" property="resTeacherId" />
-    <result column="IS_DELETED" jdbcType="DECIMAL" property="isDeleted" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    COURSE_ID, SCHOOL_ID, COURSE_NAME, RES_TEACHER_ID, IS_DELETED
-  </sql>
-  <select id="selectByExample" parameterType="com.evan.seprojrearend.po.CourseExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    'true' as QUERYID,
-    <include refid="Base_Column_List" />
-    from COURSE
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="com.evan.seprojrearend.po.CourseKey" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from COURSE
-    where COURSE_ID = #{courseId,jdbcType=DECIMAL}
-      and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="com.evan.seprojrearend.po.CourseKey">
-    delete from COURSE
-    where COURSE_ID = #{courseId,jdbcType=DECIMAL}
-      and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.evan.seprojrearend.po.CourseExample">
-    delete from COURSE
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.evan.seprojrearend.po.Course">
-    insert into COURSE (COURSE_ID, SCHOOL_ID, COURSE_NAME, 
-      RES_TEACHER_ID, IS_DELETED)
-    values (#{courseId,jdbcType=DECIMAL}, #{schoolId,jdbcType=DECIMAL}, #{courseName,jdbcType=VARCHAR}, 
-      #{resTeacherId,jdbcType=DECIMAL}, #{isDeleted,jdbcType=DECIMAL})
-  </insert>
-  <insert id="insertSelective" parameterType="com.evan.seprojrearend.po.Course">
-    insert into COURSE
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="courseId != null">
-        COURSE_ID,
-      </if>
-      <if test="schoolId != null">
-        SCHOOL_ID,
-      </if>
-      <if test="courseName != null">
-        COURSE_NAME,
-      </if>
-      <if test="resTeacherId != null">
-        RES_TEACHER_ID,
-      </if>
-      <if test="isDeleted != null">
-        IS_DELETED,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="courseId != null">
-        #{courseId,jdbcType=DECIMAL},
-      </if>
-      <if test="schoolId != null">
-        #{schoolId,jdbcType=DECIMAL},
-      </if>
-      <if test="courseName != null">
-        #{courseName,jdbcType=VARCHAR},
-      </if>
-      <if test="resTeacherId != null">
-        #{resTeacherId,jdbcType=DECIMAL},
-      </if>
-      <if test="isDeleted != null">
-        #{isDeleted,jdbcType=DECIMAL},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.evan.seprojrearend.po.CourseExample" resultType="java.lang.Long">
-    select count(*) from COURSE
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update COURSE
-    <set>
-      <if test="record.courseId != null">
-        COURSE_ID = #{record.courseId,jdbcType=DECIMAL},
-      </if>
-      <if test="record.schoolId != null">
-        SCHOOL_ID = #{record.schoolId,jdbcType=DECIMAL},
-      </if>
-      <if test="record.courseName != null">
-        COURSE_NAME = #{record.courseName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.resTeacherId != null">
-        RES_TEACHER_ID = #{record.resTeacherId,jdbcType=DECIMAL},
-      </if>
-      <if test="record.isDeleted != null">
-        IS_DELETED = #{record.isDeleted,jdbcType=DECIMAL},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update COURSE
-    set COURSE_ID = #{record.courseId,jdbcType=DECIMAL},
-      SCHOOL_ID = #{record.schoolId,jdbcType=DECIMAL},
-      COURSE_NAME = #{record.courseName,jdbcType=VARCHAR},
-      RES_TEACHER_ID = #{record.resTeacherId,jdbcType=DECIMAL},
-      IS_DELETED = #{record.isDeleted,jdbcType=DECIMAL}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.evan.seprojrearend.po.Course">
-    update COURSE
-    <set>
-      <if test="courseName != null">
-        COURSE_NAME = #{courseName,jdbcType=VARCHAR},
-      </if>
-      <if test="resTeacherId != null">
-        RES_TEACHER_ID = #{resTeacherId,jdbcType=DECIMAL},
-      </if>
-      <if test="isDeleted != null">
-        IS_DELETED = #{isDeleted,jdbcType=DECIMAL},
-      </if>
-    </set>
-    where COURSE_ID = #{courseId,jdbcType=DECIMAL}
-      and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.evan.seprojrearend.po.Course">
-    update COURSE
-    set COURSE_NAME = #{courseName,jdbcType=VARCHAR},
-      RES_TEACHER_ID = #{resTeacherId,jdbcType=DECIMAL},
-      IS_DELETED = #{isDeleted,jdbcType=DECIMAL}
+      IS_DELETED = #{isDeleted,jdbcType=DECIMAL},
+      COURSE_OUTLINE = #{courseOutline,jdbcType=VARCHAR}
     where COURSE_ID = #{courseId,jdbcType=DECIMAL}
       and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
   </update>

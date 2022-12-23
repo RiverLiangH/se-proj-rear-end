@@ -1,0 +1,16 @@
+@startuml
+class com.evan.seprojrearend.service.LectureService {
+- com.evan.seprojrearend.mapper.ExperimentMapper ExperimentMapper
++ String newExperiment(String,Integer,Integer,Integer)
+}
+class com.evan.seprojrearend.service.SysUserService {
+- com.evan.seprojrearend.mapper.SysUserMapper SysUserMapper
+- com.evan.seprojrearend.mapper.StudentMapper StudentMapper
+- com.evan.seprojrearend.mapper.TeacherMapper TeacherMapper
+- com.evan.seprojrearend.mapper.AdministratorMapper AdminitratorMapper
++ SysUser findSysUser(String)
++ String isInSysUser(String,String)
++ String newSysUser(String,String)
++ String bindVirtualAccount(String,Integer)
+}
+@enduml

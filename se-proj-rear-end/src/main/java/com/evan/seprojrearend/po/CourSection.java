@@ -11,6 +11,8 @@ public class CourSection extends CourSectionKey {
 
     private BigDecimal isComplete;
 
+    private BigDecimal isDelete;
+
     private String message;
 
     public BigDecimal getTeacherId() {
@@ -43,6 +45,14 @@ public class CourSection extends CourSectionKey {
 
     public void setIsComplete(BigDecimal isComplete) {
         this.isComplete = isComplete;
+    }
+
+    public BigDecimal getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(BigDecimal isDelete) {
+        this.isDelete = isDelete;
     }
 
     public String getMessage() {

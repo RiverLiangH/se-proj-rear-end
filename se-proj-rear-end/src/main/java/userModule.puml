@@ -1,27 +1,173 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-abstract class AbstractList
-abstract AbstractCollection
-interface List
-interface Collection
 
-List <|-- AbstractList
-Collection <|-- AbstractCollection
+com.evan.seprojrearend.po.SysUser <|--- com.evan.seprojrearend.mapper.SysUserMapper
+com.evan.seprojrearend.po.SysSchoolMesKey <|--- com.evan.seprojrearend.mapper.SysSchoolMesMapper
+com.evan.seprojrearend.po.Administrator <|--- com.evan.seprojrearend.mapper.AdministratorMapper
+com.evan.seprojrearend.po.Student <|--- com.evan.seprojrearend.mapper.StudentMapper
+com.evan.seprojrearend.po.Teacher <|--- com.evan.seprojrearend.mapper.TeacherMapper
 
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
+com.evan.seprojrearend.mapper.SysUserMapper <|-- com.evan.seprojrearend.service.SysUserService
+com.evan.seprojrearend.mapper.StudentMapper <|-- com.evan.seprojrearend.service.SysUserService
+com.evan.seprojrearend.mapper.TeacherMapper <|-- com.evan.seprojrearend.service.SysUserService
+com.evan.seprojrearend.mapper.AdministratorMapper <|-- com.evan.seprojrearend.service.SysUserService
+com.evan.seprojrearend.mapper.SysSchoolMesMapper <|-- com.evan.seprojrearend.service.SysUserService
 
-class ArrayList {
-Object[] elementData
-size()
+com.evan.seprojrearend.service.SysUserService <|-- com.evan.seprojrearend.controller.SysUserController
+
+class com.evan.seprojrearend.po.SysSchoolMesKey {
+- String email
+- BigDecimal schoolId
++ String getEmail()
++ void setEmail(String)
++ BigDecimal getSchoolId()
++ void setSchoolId(BigDecimal)
 }
 
-enum Adminitrator {
-NAME
-HOURS
-MINUTES
+interface com.evan.seprojrearend.mapper.StudentMapper {
+~ long countByExample(StudentExample)
+~ int deleteByExample(StudentExample)
+~ int deleteByPrimaryKey(StudentKey)
+~ int insert(Student)
+~ int insertSelective(Student)
+~ List<Student> selectByExample(StudentExample)
+~ Student selectByPrimaryKey(StudentKey)
+~ int updateByExampleSelective(Student,StudentExample)
+~ int updateByExample(Student,StudentExample)
+~ int updateByPrimaryKeySelective(Student)
+~ int updateByPrimaryKey(Student)
 }
 
+interface com.evan.seprojrearend.mapper.TeacherMapper {
+~ long countByExample(TeacherExample)
+~ int deleteByExample(TeacherExample)
+~ int deleteByPrimaryKey(TeacherKey)
+~ int insert(Teacher)
+~ int insertSelective(Teacher)
+~ List<Teacher> selectByExample(TeacherExample)
+~ Teacher selectByPrimaryKey(TeacherKey)
+~ int updateByExampleSelective(Teacher,TeacherExample)
+~ int updateByExample(Teacher,TeacherExample)
+~ int updateByPrimaryKeySelective(Teacher)
+~ int updateByPrimaryKey(Teacher)
+}
+
+interface com.evan.seprojrearend.mapper.AdministratorMapper {
+~ long countByExample(AdministratorExample)
+~ int deleteByExample(AdministratorExample)
+~ int deleteByPrimaryKey(AdministratorKey)
+~ int insert(Administrator)
+~ int insertSelective(Administrator)
+~ List<Administrator> selectByExample(AdministratorExample)
+~ Administrator selectByPrimaryKey(AdministratorKey)
+~ int updateByExampleSelective(Administrator,AdministratorExample)
+~ int updateByExample(Administrator,AdministratorExample)
+~ int updateByPrimaryKeySelective(Administrator)
+~ int updateByPrimaryKey(Administrator)
+}
+
+interface com.evan.seprojrearend.mapper.SysSchoolMesMapper {
+~ long countByExample(SysSchoolMesExample)
+~ int deleteByExample(SysSchoolMesExample)
+~ int deleteByPrimaryKey(SysSchoolMesKey)
+~ int insert(SysSchoolMesKey)
+~ int insertSelective(SysSchoolMesKey)
+~ List<SysSchoolMesKey> selectByExample(SysSchoolMesExample)
+~ int updateByExampleSelective(SysSchoolMesKey,SysSchoolMesExample)
+~ int updateByExample(SysSchoolMesKey,SysSchoolMesExample)
+}
+
+class com.evan.seprojrearend.po.Administrator {
+- String name
+- String mailAddress
+- BigDecimal isBond
+- BigDecimal isDeleted
++ String getName()
++ void setName(String)
++ String getMailAddress()
++ void setMailAddress(String)
++ BigDecimal getIsBond()
++ void setIsBond(BigDecimal)
++ BigDecimal getIsDeleted()
++ void setIsDeleted(BigDecimal)
+}
+
+class com.evan.seprojrearend.po.Student {
+- String name
+- String mailAddress
+- BigDecimal isBond
+- BigDecimal isDeleted
+- BigDecimal isAssistant
++ String getName()
++ void setName(String)
++ String getMailAddress()
++ void setMailAddress(String)
++ BigDecimal getIsBond()
++ void setIsBond(BigDecimal)
++ BigDecimal getIsDeleted()
++ void setIsDeleted(BigDecimal)
++ BigDecimal getIsAssistant()
++ void setIsAssistant(BigDecimal)
+}
+
+class com.evan.seprojrearend.po.Teacher {
+- String name
+- String mailAddress
+- BigDecimal isBond
+- BigDecimal isDeleted
+- BigDecimal isResponse
++ String getName()
++ void setName(String)
++ String getMailAddress()
++ void setMailAddress(String)
++ BigDecimal getIsBond()
++ void setIsBond(BigDecimal)
++ BigDecimal getIsDeleted()
++ void setIsDeleted(BigDecimal)
++ BigDecimal getIsResponse()
++ void setIsResponse(BigDecimal)
+}
+
+class com.evan.seprojrearend.po.SysUser {
+- String email
+- String password
++ String getEmail()
++ void setEmail(String)
++ String getPassword()
++ void setPassword(String)
+}
+
+interface com.evan.seprojrearend.mapper.SysUserMapper {
+~ long countByExample(SysUserExample)
+~ int deleteByExample(SysUserExample)
+~ int deleteByPrimaryKey(String)
+~ int insert(SysUser)
+~ int insertSelective(SysUser)
+~ List<SysUser> selectByExample(SysUserExample)
+~ SysUser selectByPrimaryKey(String)
+~ int updateByExampleSelective(SysUser,SysUserExample)
+~ int updateByExample(SysUser,SysUserExample)
+~ int updateByPrimaryKeySelective(SysUser)
+~ int updateByPrimaryKey(SysUser)
+}
+
+class com.evan.seprojrearend.service.SysUserService {
+- com.evan.seprojrearend.mapper.SysUserMapper SysUserMapper
+- com.evan.seprojrearend.mapper.StudentMapper StudentMapper
+- com.evan.seprojrearend.mapper.TeacherMapper TeacherMapper
+- com.evan.seprojrearend.mapper.AdministratorMapper AdminitratorMapper
++ SysUser findSysUser(String)
++ String isInSysUser(String,String)
++ String newSysUser(String,String)
++ String bindVirtualAccount(String,Integer)
+}
+
+class com.evan.seprojrearend.controller.SysUserController {
+- SysUserService SysUserService
++ JsonResult findSysUser(String)
++ JsonResult validSysUser(String,String)
++ JsonResult newSysUser(String,String)
++ JsonResult bindVirtualAccount(String,Integer)
+}
 @enduml

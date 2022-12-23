@@ -23,6 +23,9 @@ public class SysUserService {
     @Autowired
     private com.evan.seprojrearend.mapper.AdministratorMapper AdminitratorMapper;
 
+    @Autowired
+    private com.evan.seprojrearend.mapper.SysSchoolMesMapper SysSchoolMesMapper;
+
     public SysUserService(com.evan.seprojrearend.mapper.SysUserMapper sysUserMapper, com.evan.seprojrearend.mapper.StudentMapper studentMapper, com.evan.seprojrearend.mapper.TeacherMapper teacherMapper, AdministratorMapper adminitratorMapper) {
         SysUserMapper = sysUserMapper;
         StudentMapper = studentMapper;
@@ -34,7 +37,7 @@ public class SysUserService {
         return SysUserMapper.selectByPrimaryKey(email);
     }
 
-    //登录验证
+    //1.1 用户登录验证
     public String isInSysUser(String email, String password){
 
         SysUser thisUser = SysUserMapper.selectByPrimaryKey(email);
@@ -44,7 +47,7 @@ public class SysUserService {
             return "False";
     }
 
-    //创建新用户
+    //1.2 用户注册
     public String newSysUser(String email,String password){
 
         SysUser newUser = new SysUser();
@@ -56,7 +59,42 @@ public class SysUserService {
             return "False";
     }
 
-    //绑定虚拟账户
+    //1.3 批量导入学生
+    public String importStudentByExcel(List<SysMember> student_list, Integer school_id){
+        for (SysMember SysMember : student_list) {
+            Student newStudent = new Student();
+            newStudent.setStudentsId(SysMember.getId());
+            newStudent.setName(SysMember.getName());
+            newStudent.setMailAddress(SysMember.getMail());
+            newStudent.setSchoolId(BigDecimal.valueOf(school_id));
+            newStudent.setIsBond(BigDecimal.valueOf(0));
+            newStudent.setIsDeleted(BigDecimal.valueOf(0));
+            newStudent.setIsAssistant(BigDecimal.valueOf(0));
+            StudentMapper.insert(newStudent);
+            //System.out.println(SysMember);
+        }
+        return "True";
+    }
+
+    //1.4 批量导入教师
+    public String importTeacherByExcel(List<SysMember> teacher_list, Integer school_id){
+        for (SysMember SysMember : teacher_list) {
+            Teacher newTeacher = new Teacher();
+            newTeacher.setTeacherId(SysMember.getId());
+            newTeacher.setIsBond(BigDecimal.valueOf(0));
+            newTeacher.setName(SysMember.getName());
+            newTeacher.setMailAddress(SysMember.getMail());
+            newTeacher.setSchoolId(BigDecimal.valueOf(school_id));
+            newTeacher.setIsDeleted(BigDecimal.valueOf(0));
+            newTeacher.setIsResponse(BigDecimal.valueOf(0));
+            TeacherMapper.insert(newTeacher);
+            //System.out.println(SysMember);
+        }
+        return "True";
+    }
+
+
+    //1.4 用户绑定虚拟账户
     public String bindVirtualAccount(String email, Integer school_id){
         //查找学生身份
         StudentExample findMatchStu = new StudentExample();
@@ -69,6 +107,12 @@ public class SysUserService {
             Student updateStudent = new Student();
             updateStudent.setIsBond(BigDecimal.valueOf(1));
             StudentMapper.updateByExampleSelective(updateStudent,findMatchStu);
+
+            //在USER_SCHOOL_MES中添加用户信息
+            SysSchoolMesKey newMes = new SysSchoolMesKey();
+            newMes.setSchoolId(BigDecimal.valueOf(school_id));
+            newMes.setEmail(email);
+            SysSchoolMesMapper.insert(newMes);
             return "True";
         }
         else{
@@ -83,6 +127,12 @@ public class SysUserService {
                 Teacher updateTeacher = new Teacher();
                 updateTeacher.setIsBond(BigDecimal.valueOf(1));
                 TeacherMapper.updateByExampleSelective(updateTeacher,findMatchTea);
+
+                //在USER_SCHOOL_MES中添加用户信息
+                SysSchoolMesKey newMes = new SysSchoolMesKey();
+                newMes.setSchoolId(BigDecimal.valueOf(school_id));
+                newMes.setEmail(email);
+                SysSchoolMesMapper.insert(newMes);
                 return "True";
             }
             else{

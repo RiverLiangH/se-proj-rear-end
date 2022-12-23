@@ -9,6 +9,8 @@ public class Course extends CourseKey {
 
     private BigDecimal isDeleted;
 
+    private String courseOutline;
+
     public String getCourseName() {
         return courseName;
     }
@@ -31,5 +33,13 @@ public class Course extends CourseKey {
 
     public void setIsDeleted(BigDecimal isDeleted) {
         this.isDeleted = isDeleted;
+    }
+
+    public String getCourseOutline() {
+        return courseOutline;
+    }
+
+    public void setCourseOutline(String courseOutline) {
+        this.courseOutline = courseOutline == null ? null : courseOutline.trim();
     }
 }

@@ -474,6 +474,66 @@ public class CourSectionExample {
             addCriterion("IS_COMPLETE not between", value1, value2, "isComplete");
             return (Criteria) this;
         }
+
+        public Criteria andIsDeleteIsNull() {
+            addCriterion("IS_DELETE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteIsNotNull() {
+            addCriterion("IS_DELETE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteEqualTo(BigDecimal value) {
+            addCriterion("IS_DELETE =", value, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteNotEqualTo(BigDecimal value) {
+            addCriterion("IS_DELETE <>", value, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteGreaterThan(BigDecimal value) {
+            addCriterion("IS_DELETE >", value, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("IS_DELETE >=", value, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteLessThan(BigDecimal value) {
+            addCriterion("IS_DELETE <", value, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("IS_DELETE <=", value, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteIn(List<BigDecimal> values) {
+            addCriterion("IS_DELETE in", values, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteNotIn(List<BigDecimal> values) {
+            addCriterion("IS_DELETE not in", values, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("IS_DELETE between", value1, value2, "isDelete");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDeleteNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("IS_DELETE not between", value1, value2, "isDelete");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

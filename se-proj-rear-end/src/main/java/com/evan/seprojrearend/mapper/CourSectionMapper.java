@@ -1,8 +1,11 @@
 package com.evan.seprojrearend.mapper;
 
+import com.alibaba.fastjson.JSONObject;
 import com.evan.seprojrearend.po.CourSection;
 import com.evan.seprojrearend.po.CourSectionExample;
 import com.evan.seprojrearend.po.CourSectionKey;
+
+import java.math.BigDecimal;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,6 +21,10 @@ public interface CourSectionMapper {
     int insertSelective(CourSection record);
 
     List<CourSection> selectByExampleWithBLOBs(CourSectionExample example);
+
+    List<JSONObject> selectTakeByTeacherId(@Param("teacherId")BigDecimal teacherId);
+
+    List<JSONObject> selectTakeByStudentId(@Param("studentId")BigDecimal studentId);
 
     List<CourSection> selectByExample(CourSectionExample example);
 

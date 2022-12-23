@@ -414,6 +414,76 @@ public class CourseExample {
             addCriterion("IS_DELETED not between", value1, value2, "isDeleted");
             return (Criteria) this;
         }
+
+        public Criteria andCourseOutlineIsNull() {
+            addCriterion("COURSE_OUTLINE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCourseOutlineIsNotNull() {
+            addCriterion("COURSE_OUTLINE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCourseOutlineEqualTo(String value) {
+            addCriterion("COURSE_OUTLINE =", value, "courseOutline");
+            return (Criteria) this;
+        }
+
+        public Criteria andCourseOutlineNotEqualTo(String value) {
+            addCriterion("COURSE_OUTLINE <>", value, "courseOutline");
+            return (Criteria) this;
+        }
+
+        public Criteria andCourseOutlineGreaterThan(String value) {
+            addCriterion("COURSE_OUTLINE >", value, "courseOutline");
+            return (Criteria) this;
+        }
+
+        public Criteria andCourseOutlineGreaterThanOrEqualTo(String value) {
+            addCriterion("COURSE_OUTLINE >=", value, "courseOutline");
+            return (Criteria) this;
+        }
+
+        public Criteria andCourseOutlineLessThan(String value) {
+            addCriterion("COURSE_OUTLINE <", value, "courseOutline");
+            return (Criteria) this;
+        }
+
+        public Criteria andCourseOutlineLessThanOrEqualTo(String value) {
+            addCriterion("COURSE_OUTLINE <=", value, "courseOutline");
+            return (Criteria) this;
+        }
+
+        public Criteria andCourseOutlineLike(String value) {
+            addCriterion("COURSE_OUTLINE like", value, "courseOutline");
+            return (Criteria) this;
+        }
+
+        public Criteria andCourseOutlineNotLike(String value) {
+            addCriterion("COURSE_OUTLINE not like", value, "courseOutline");
+            return (Criteria) this;
+        }
+
+        public Criteria andCourseOutlineIn(List<String> values) {
+            addCriterion("COURSE_OUTLINE in", values, "courseOutline");
+            return (Criteria) this;
+        }
+
+        public Criteria andCourseOutlineNotIn(List<String> values) {
+            addCriterion("COURSE_OUTLINE not in", values, "courseOutline");
+            return (Criteria) this;
+        }
+
+        public Criteria andCourseOutlineBetween(String value1, String value2) {
+            addCriterion("COURSE_OUTLINE between", value1, value2, "courseOutline");
+            return (Criteria) this;
+        }
+
+        public Criteria andCourseOutlineNotBetween(String value1, String value2) {
+            addCriterion("COURSE_OUTLINE not between", value1, value2, "courseOutline");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

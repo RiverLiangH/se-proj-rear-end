@@ -8,6 +8,7 @@
     <result column="COURSE_ID" jdbcType="DECIMAL" property="courseId" />
     <result column="SECTION_TIME" jdbcType="VARCHAR" property="sectionTime" />
     <result column="IS_COMPLETE" jdbcType="DECIMAL" property="isComplete" />
+    <result column="IS_DELETE" jdbcType="DECIMAL" property="isDelete" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.evan.seprojrearend.po.CourSection">
     <result column="MESSAGE" jdbcType="CLOB" property="message" />
@@ -71,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    SECTION_ID, SCHOOL_ID, TEACHER_ID, COURSE_ID, SECTION_TIME, IS_COMPLETE
+    SECTION_ID, SCHOOL_ID, TEACHER_ID, COURSE_ID, SECTION_TIME, IS_COMPLETE, IS_DELETE
   </sql>
   <sql id="Blob_Column_List">
     MESSAGE
@@ -131,10 +132,10 @@
   <insert id="insert" parameterType="com.evan.seprojrearend.po.CourSection">
     insert into COUR_SECTION (SECTION_ID, SCHOOL_ID, TEACHER_ID, 
       COURSE_ID, SECTION_TIME, IS_COMPLETE, 
-      MESSAGE)
+      IS_DELETE, MESSAGE)
     values (#{sectionId,jdbcType=DECIMAL}, #{schoolId,jdbcType=DECIMAL}, #{teacherId,jdbcType=DECIMAL}, 
       #{courseId,jdbcType=DECIMAL}, #{sectionTime,jdbcType=VARCHAR}, #{isComplete,jdbcType=DECIMAL}, 
-      #{message,jdbcType=CLOB})
+      #{isDelete,jdbcType=DECIMAL}, #{message,jdbcType=CLOB})
   </insert>
   <insert id="insertSelective" parameterType="com.evan.seprojrearend.po.CourSection">
     insert into COUR_SECTION
@@ -156,6 +157,9 @@
       </if>
       <if test="isComplete != null">
         IS_COMPLETE,
+      </if>
+      <if test="isDelete != null">
+        IS_DELETE,
       </if>
       <if test="message != null">
         MESSAGE,
@@ -180,6 +184,9 @@
       <if test="isComplete != null">
         #{isComplete,jdbcType=DECIMAL},
       </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=DECIMAL},
+      </if>
       <if test="message != null">
         #{message,jdbcType=CLOB},
       </if>
@@ -191,6 +198,22 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+  <!-- new mapper start-->
+  <select id="selectTakeByTeacherId" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT section_time, course_name,res_teacher_id
+    FROM COUR_SECTION,COURSE
+    WHERE
+    COUR_SECTION.course_id = COURSE.course_id and COUR_SECTION.teacher_id = #{teacherId,jdbcType=DECIMAL}
+  </select>
+  <!-- new mapper end-->
+  <!-- new mapper start-->
+  <select id="selectTakeByStudentId" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT section_time, course_name
+    FROM COUR_SECTION,COURSE,SECTION_INFO
+    WHERE
+    SECTION_INFO.student_id = #{studentId,jdbcType=DECIMAL} and SECTION_INFO.section_id = COUR_SECTION.section_id and COUR_SECTION.course_id = COURSE.course_id
+  </select>
+  <!-- new mapper end-->
   <update id="updateByExampleSelective" parameterType="map">
     update COUR_SECTION
     <set>
@@ -212,6 +235,9 @@
       <if test="record.isComplete != null">
         IS_COMPLETE = #{record.isComplete,jdbcType=DECIMAL},
       </if>
+      <if test="record.isDelete != null">
+        IS_DELETE = #{record.isDelete,jdbcType=DECIMAL},
+      </if>
       <if test="record.message != null">
         MESSAGE = #{record.message,jdbcType=CLOB},
       </if>
@@ -228,6 +254,7 @@
       COURSE_ID = #{record.courseId,jdbcType=DECIMAL},
       SECTION_TIME = #{record.sectionTime,jdbcType=VARCHAR},
       IS_COMPLETE = #{record.isComplete,jdbcType=DECIMAL},
+      IS_DELETE = #{record.isDelete,jdbcType=DECIMAL},
       MESSAGE = #{record.message,jdbcType=CLOB}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -240,7 +267,8 @@
       TEACHER_ID = #{record.teacherId,jdbcType=DECIMAL},
       COURSE_ID = #{record.courseId,jdbcType=DECIMAL},
       SECTION_TIME = #{record.sectionTime,jdbcType=VARCHAR},
-      IS_COMPLETE = #{record.isComplete,jdbcType=DECIMAL}
+      IS_COMPLETE = #{record.isComplete,jdbcType=DECIMAL},
+      IS_DELETE = #{record.isDelete,jdbcType=DECIMAL}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -260,6 +288,9 @@
       <if test="isComplete != null">
         IS_COMPLETE = #{isComplete,jdbcType=DECIMAL},
       </if>
+      <if test="isDelete != null">
+        IS_DELETE = #{isDelete,jdbcType=DECIMAL},
+      </if>
       <if test="message != null">
         MESSAGE = #{message,jdbcType=CLOB},
       </if>
@@ -273,6 +304,7 @@
       COURSE_ID = #{courseId,jdbcType=DECIMAL},
       SECTION_TIME = #{sectionTime,jdbcType=VARCHAR},
       IS_COMPLETE = #{isComplete,jdbcType=DECIMAL},
+      IS_DELETE = #{isDelete,jdbcType=DECIMAL},
       MESSAGE = #{message,jdbcType=CLOB}
     where SECTION_ID = #{sectionId,jdbcType=DECIMAL}
       and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
@@ -282,7 +314,8 @@
     set TEACHER_ID = #{teacherId,jdbcType=DECIMAL},
       COURSE_ID = #{courseId,jdbcType=DECIMAL},
       SECTION_TIME = #{sectionTime,jdbcType=VARCHAR},
-      IS_COMPLETE = #{isComplete,jdbcType=DECIMAL}
+      IS_COMPLETE = #{isComplete,jdbcType=DECIMAL},
+      IS_DELETE = #{isDelete,jdbcType=DECIMAL}
     where SECTION_ID = #{sectionId,jdbcType=DECIMAL}
       and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
   </update>

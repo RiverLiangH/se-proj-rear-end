@@ -1,4 +1,4 @@
-package com.evan.seprojrearend.service;
+package com.evan.seprojrearend.common;
 
 public class JsonResult {
     private Integer code;//状态码

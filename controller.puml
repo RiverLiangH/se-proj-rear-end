@@ -1,0 +1,16 @@
+@startuml
+class com.evan.seprojrearend.controller.SysUserController {
+- SysUserService SysUserService
++ JsonResult findSysUser(String)
++ JsonResult validSysUser(String,String)
++ JsonResult newSysUser(String,String)
++ JsonResult bindVirtualAccount(String,Integer)
+}
+class com.evan.seprojrearend.controller.LectureController {
+- LectureService LectureService
++ JsonResult findSysUser(String,Integer,Integer,Integer)
+}
+class com.evan.seprojrearend.controller.HelloController {
++ String hello()
+}
+@enduml
