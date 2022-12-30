@@ -1,0 +1,58 @@
+@startuml
+'https://plantuml.com/class-diagram
+com.evan.seprojrearend.po.LiteratureKey <|-- com.evan.seprojrearend.po.Literature
+com.evan.seprojrearend.po.Literature <|-- com.evan.seprojrearend.mapper.LiteratureMapper
+com.evan.seprojrearend.mapper.LiteratureMapper <|-- com.evan.seprojrearend.service.LiteratureService
+com.evan.seprojrearend.service.LiteratureService <|-- com.evan.seprojrearend.controller.LiteratureController
+
+class com.evan.seprojrearend.po.Literature {
+- String autoIncrementName
+- BigDecimal experimentId
+- BigDecimal mark
+- String litertureAddress
++ String getAutoIncrementName()
++ void setAutoIncrementName(String)
++ BigDecimal getExperimentId()
++ void setExperimentId(BigDecimal)
++ BigDecimal getMark()
++ void setMark(BigDecimal)
++ String getLitertureAddress()
++ void setLitertureAddress(String)
+}
+
+class com.evan.seprojrearend.po.LiteratureKey {
+- BigDecimal literatureId
+- BigDecimal schoolId
++ BigDecimal getLiteratureId()
++ void setLiteratureId(BigDecimal)
++ BigDecimal getSchoolId()
++ void setSchoolId(BigDecimal)
+}
+
+interface com.evan.seprojrearend.mapper.LiteratureMapper {
+~ long countByExample(LiteratureExample)
+~ int deleteByExample(LiteratureExample)
+~ int deleteByPrimaryKey(LiteratureKey)
+~ int insert(Literature)
+~ int insertSelective(Literature)
+~ List<Literature> selectByExample(LiteratureExample)
+~ Literature selectByPrimaryKey(LiteratureKey)
+~ int updateByExampleSelective(Literature,LiteratureExample)
+~ int updateByExample(Literature,LiteratureExample)
+~ int updateByPrimaryKeySelective(Literature)
+~ int updateByPrimaryKey(Literature)
+}
+
+class com.evan.seprojrearend.service.LiteratureService {
+- com.evan.seprojrearend.mapper.LiteratureMapper LiteratureMapper
++ String upload_literature(String,Integer,String,Integer)
++ String download_literature()
+}
+
+class com.evan.seprojrearend.controller.LiteratureController {
+- LiteratureService LiteratureService
++ JsonResult uploadLiterature(String,Integer,String,Integer)
++ JsonResult downloadLiterature(String,Integer,String,Integer)
+}
+
+@enduml

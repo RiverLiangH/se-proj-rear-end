@@ -176,4 +176,16 @@ public class LectureController {
         return JsonResult.isOk(re);
     }
 
+    //2.4.1.1 学生上传报告
+    @PostMapping("lecture/upload_report/{report_url}/{exp_id}/{stu_id}/{school_id}")
+    public JsonResult uploadReport(@PathVariable String report_url,@PathVariable Integer exp_id,@PathVariable Integer stu_id,@PathVariable Integer school_id){
+        String re = null;
+        try {
+            re = LectureService.uploadReport(report_url,exp_id,stu_id,school_id);
+        }catch (Exception e){
+            return JsonResult.isError(10001,"未知错误");
+        }
+        return JsonResult.isOk(re);
+    }
+
 }

@@ -1,0 +1,203 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+com.evan.seprojrearend.po.Reports <|-- com.evan.seprojrearend.mapper.ReportsMapper
+com.evan.seprojrearend.po.Course <|-- com.evan.seprojrearend.mapper.CourseMapper
+com.evan.seprojrearend.po.Experiment <|-- com.evan.seprojrearend.mapper.ExperimentMapper
+com.evan.seprojrearend.po.CourSection <|-- com.evan.seprojrearend.mapper.CourSectionMapper
+com.evan.seprojrearend.po.SectionInfoKey <|-- com.evan.seprojrearend.mapper.SectionInfoMapper
+
+com.evan.seprojrearend.mapper.ReportsMapper <|-- com.evan.seprojrearend.service.LectureService
+com.evan.seprojrearend.mapper.CourseMapper <|-- com.evan.seprojrearend.service.LectureService
+com.evan.seprojrearend.mapper.ExperimentMapper <|-- com.evan.seprojrearend.service.LectureService
+com.evan.seprojrearend.mapper.CourSectionMapper <|-- com.evan.seprojrearend.service.LectureService
+com.evan.seprojrearend.mapper.SectionInfoMapper <|-- com.evan.seprojrearend.service.LectureService
+
+com.evan.seprojrearend.service.LectureService <|-- com.evan.seprojrearend.controller.LectureController
+class com.evan.seprojrearend.po.Reports {
+- Date finData
+- BigDecimal mark
+- String reportAddress
+- BigDecimal teacherId
++ Date getFinData()
++ void setFinData(Date)
++ BigDecimal getMark()
++ void setMark(BigDecimal)
++ String getReportAddress()
++ void setReportAddress(String)
++ BigDecimal getTeacherId()
++ void setTeacherId(BigDecimal)
+}
+
+class com.evan.seprojrearend.po.Experiment {
+- String experimentName
+- BigDecimal sectionId
+- BigDecimal teacherId
+- BigDecimal isDeleted
+- String experimentContext
++ String getExperimentName()
++ void setExperimentName(String)
++ BigDecimal getSectionId()
++ void setSectionId(BigDecimal)
++ BigDecimal getTeacherId()
++ void setTeacherId(BigDecimal)
++ BigDecimal getIsDeleted()
++ void setIsDeleted(BigDecimal)
++ String getExperimentContext()
++ void setExperimentContext(String)
+}
+
+class com.evan.seprojrearend.po.Course {
+- String courseName
+- BigDecimal resTeacherId
+- BigDecimal isDeleted
++ String getCourseName()
++ void setCourseName(String)
++ BigDecimal getResTeacherId()
++ void setResTeacherId(BigDecimal)
++ BigDecimal getIsDeleted()
++ void setIsDeleted(BigDecimal)
+}
+
+class com.evan.seprojrearend.po.CourSection {
+- BigDecimal teacherId
+- BigDecimal courseId
+- String sectionTime
+- BigDecimal isComplete
+- String message
++ BigDecimal getTeacherId()
++ void setTeacherId(BigDecimal)
++ BigDecimal getCourseId()
++ void setCourseId(BigDecimal)
++ String getSectionTime()
++ void setSectionTime(String)
++ BigDecimal getIsComplete()
++ void setIsComplete(BigDecimal)
++ String getMessage()
++ void setMessage(String)
+}
+
+class com.evan.seprojrearend.po.SectionInfoKey {
+- BigDecimal sectionId
+- BigDecimal studentId
+- BigDecimal schoolId
++ BigDecimal getSectionId()
++ void setSectionId(BigDecimal)
++ BigDecimal getStudentId()
++ void setStudentId(BigDecimal)
++ BigDecimal getSchoolId()
++ void setSchoolId(BigDecimal)
+}
+
+interface com.evan.seprojrearend.mapper.ExperimentMapper {
+~ long countByExample(ExperimentExample)
+~ int deleteByExample(ExperimentExample)
+~ int deleteByPrimaryKey(ExperimentKey)
+~ int insert(Experiment)
+~ int insertSelective(Experiment)
+~ List<Experiment> selectByExampleWithBLOBs(ExperimentExample)
+~ List<Experiment> selectByExample(ExperimentExample)
+~ Experiment selectByPrimaryKey(ExperimentKey)
+~ int updateByExampleSelective(Experiment,ExperimentExample)
+~ int updateByExampleWithBLOBs(Experiment,ExperimentExample)
+~ int updateByExample(Experiment,ExperimentExample)
+~ int updateByPrimaryKeySelective(Experiment)
+~ int updateByPrimaryKeyWithBLOBs(Experiment)
+~ int updateByPrimaryKey(Experiment)
+}
+interface com.evan.seprojrearend.mapper.ReportsMapper {
+~ long countByExample(ReportsExample)
+~ int deleteByExample(ReportsExample)
+~ int deleteByPrimaryKey(ReportsKey)
+~ int insert(Reports)
+~ int insertSelective(Reports)
+~ List<Reports> selectByExample(ReportsExample)
+~ Reports selectByPrimaryKey(ReportsKey)
+~ int updateByExampleSelective(Reports,ReportsExample)
+~ int updateByExample(Reports,ReportsExample)
+~ int updateByPrimaryKeySelective(Reports)
+~ int updateByPrimaryKey(Reports)
+}
+
+interface com.evan.seprojrearend.mapper.CourseMapper {
+~ long countByExample(CourseExample)
+~ int deleteByExample(CourseExample)
+~ int deleteByPrimaryKey(CourseKey)
+~ int insert(Course)
+~ int insertSelective(Course)
+~ List<Course> selectByExample(CourseExample)
+~ Course selectByPrimaryKey(CourseKey)
+~ int updateByExampleSelective(Course,CourseExample)
+~ int updateByExample(Course,CourseExample)
+~ int updateByPrimaryKeySelective(Course)
+~ int updateByPrimaryKey(Course)
+}
+
+interface com.evan.seprojrearend.mapper.CourSectionMapper {
+~ long countByExample(CourSectionExample)
+~ int deleteByExample(CourSectionExample)
+~ int deleteByPrimaryKey(CourSectionKey)
+~ int insert(CourSection)
+~ int insertSelective(CourSection)
+~ List<CourSection> selectByExampleWithBLOBs(CourSectionExample)
+~ List<CourSection> selectByExample(CourSectionExample)
+~ CourSection selectByPrimaryKey(CourSectionKey)
+~ int updateByExampleSelective(CourSection,CourSectionExample)
+~ int updateByExampleWithBLOBs(CourSection,CourSectionExample)
+~ int updateByExample(CourSection,CourSectionExample)
+~ int updateByPrimaryKeySelective(CourSection)
+~ int updateByPrimaryKeyWithBLOBs(CourSection)
+~ int updateByPrimaryKey(CourSection)
+}
+
+interface com.evan.seprojrearend.mapper.SectionInfoMapper {
+~ long countByExample(SectionInfoExample)
+~ int deleteByExample(SectionInfoExample)
+~ int deleteByPrimaryKey(SectionInfoKey)
+~ int insert(SectionInfo)
+~ int insertSelective(SectionInfo)
+~ List<SectionInfo> selectByExample(SectionInfoExample)
+~ SectionInfo selectByPrimaryKey(SectionInfoKey)
+~ int updateByExampleSelective(SectionInfo,SectionInfoExample)
+~ int updateByExample(SectionInfo,SectionInfoExample)
+~ int updateByPrimaryKeySelective(SectionInfo)
+~ int updateByPrimaryKey(SectionInfo)
+}
+
+class com.evan.seprojrearend.service.LectureService {
+- com.evan.seprojrearend.mapper.ExperimentMapper ExperimentMapper
+- com.evan.seprojrearend.mapper.CourseMapper CourseMapper
+- com.evan.seprojrearend.mapper.TeacherMapper TeacherMapper
+- com.evan.seprojrearend.mapper.CourSectionMapper CourSectionMapper
+- com.evan.seprojrearend.mapper.SectionInfoMapper SectionInfoMapper
++ String createCourse(String,Integer)
++ String getCourseList(Integer)
++ String deleteCourse(Integer)
++ String importSectionInfo(List<SecInfoExcel>,Integer)
++ List<JSONObject> getTeacherTakeList(Integer)
++ List<JSONObject> getStudentTakeList(Integer)
++ String createSection(Integer,Integer,String)
++ String deleteSection(Integer)
++ String modifySection(Integer,Integer,String)
++ String getSectionList(Integer)
++ String newExperiment(String,Integer,Integer,Integer,String)
++ String getExpList(Integer)
+}
+
+class com.evan.seprojrearend.controller.LectureController {
+- LectureService LectureService
++ JsonResult createCourse(String,Integer)
++ JsonResult getCourseList(Integer)
++ JsonResult deleteCourse(Integer)
++ JsonResult importSectionInfo(MultipartFile,Integer)
++ JsonResult getTeacherTakeList(Integer)
++ JsonResult getStudentTakeList(Integer)
++ JsonResult createSection(Integer,Integer,String)
++ JsonResult deleteSection(Integer)
++ JsonResult modifySection(Integer,Integer,String)
++ JsonResult getSectionList(Integer)
++ JsonResult createExp(String,Integer,Integer,Integer,String)
++ JsonResult getExpList(Integer)
+}
+
+@enduml

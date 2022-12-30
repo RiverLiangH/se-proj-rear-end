@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -26,12 +28,16 @@ public class LectureService {
     @Autowired
     private final com.evan.seprojrearend.mapper.SectionInfoMapper SectionInfoMapper;
 
-    public LectureService(com.evan.seprojrearend.mapper.ExperimentMapper experimentMapper, com.evan.seprojrearend.mapper.CourseMapper courseMapper, com.evan.seprojrearend.mapper.TeacherMapper teacherMapper, com.evan.seprojrearend.mapper.CourSectionMapper courSectionMapper, com.evan.seprojrearend.mapper.SectionInfoMapper sectionInfoMapper) {
+    @Autowired
+    private final com.evan.seprojrearend.mapper.ReportsMapper ReportsMapper;
+
+    public LectureService(com.evan.seprojrearend.mapper.ExperimentMapper experimentMapper, com.evan.seprojrearend.mapper.CourseMapper courseMapper, com.evan.seprojrearend.mapper.TeacherMapper teacherMapper, com.evan.seprojrearend.mapper.CourSectionMapper courSectionMapper, com.evan.seprojrearend.mapper.SectionInfoMapper sectionInfoMapper, com.evan.seprojrearend.mapper.ReportsMapper reportsMapper) {
         ExperimentMapper = experimentMapper;
         CourseMapper = courseMapper;
         TeacherMapper = teacherMapper;
         CourSectionMapper = courSectionMapper;
         SectionInfoMapper = sectionInfoMapper;
+        ReportsMapper = reportsMapper;
     }
 
     //2.1.1.1 设立课程
@@ -168,6 +174,23 @@ public class LectureService {
         criteria.andIsDeletedEqualTo(BigDecimal.valueOf(0));//未删除
         List<Experiment> queryAllExp = ExperimentMapper.selectByExample(findSection);
         return new ObjectMapper().writeValueAsString(queryAllExp);
+    }
+
+    //2.4.1.1 学生上传报告
+    public String uploadReport(String report_url,Integer exp_id,Integer stu_id,Integer school_id){
+        //获取当前时间
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        Date curDate = new Date(System.currentTimeMillis());
+        //创建新报告
+        Reports newReport = new Reports();
+        newReport.setReportAddress(report_url);
+        newReport.setExperimentId(BigDecimal.valueOf(exp_id));
+        newReport.setStudentId(BigDecimal.valueOf(stu_id));
+        newReport.setSchoolId(BigDecimal.valueOf(school_id));
+        newReport.setFinData(curDate);
+
+        ReportsMapper.insertSelective(newReport);
+        return "True";
     }
 
 

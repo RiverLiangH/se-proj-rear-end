@@ -1,16 +1,43 @@
 @startuml
 class com.evan.seprojrearend.service.LectureService {
 - com.evan.seprojrearend.mapper.ExperimentMapper ExperimentMapper
-+ String newExperiment(String,Integer,Integer,Integer)
+- com.evan.seprojrearend.mapper.CourseMapper CourseMapper
+- com.evan.seprojrearend.mapper.TeacherMapper TeacherMapper
+- com.evan.seprojrearend.mapper.CourSectionMapper CourSectionMapper
+- com.evan.seprojrearend.mapper.SectionInfoMapper SectionInfoMapper
+- com.evan.seprojrearend.mapper.ReportsMapper ReportsMapper
++ String createCourse(String,Integer)
++ String getCourseList(Integer)
++ String deleteCourse(Integer)
++ String importSectionInfo(List<SecInfoExcel>,Integer)
++ List<JSONObject> getTeacherTakeList(Integer)
++ List<JSONObject> getStudentTakeList(Integer)
++ String createSection(Integer,Integer,String)
++ String deleteSection(Integer)
++ String modifySection(Integer,Integer,String)
++ String getSectionList(Integer)
++ String newExperiment(String,Integer,Integer,Integer,String)
++ String getExpList(Integer)
++ String uploadReport(String,Integer,Integer,Integer)
 }
 class com.evan.seprojrearend.service.SysUserService {
 - com.evan.seprojrearend.mapper.SysUserMapper SysUserMapper
 - com.evan.seprojrearend.mapper.StudentMapper StudentMapper
 - com.evan.seprojrearend.mapper.TeacherMapper TeacherMapper
 - com.evan.seprojrearend.mapper.AdministratorMapper AdminitratorMapper
+- com.evan.seprojrearend.mapper.SysSchoolMesMapper SysSchoolMesMapper
 + SysUser findSysUser(String)
 + String isInSysUser(String,String)
 + String newSysUser(String,String)
++ String importStudentByExcel(List<SysMember>,Integer)
++ String importTeacherByExcel(List<SysMember>,Integer)
 + String bindVirtualAccount(String,Integer)
+}
+class com.evan.seprojrearend.service.LiteratureService {
+- com.evan.seprojrearend.mapper.LiteratureMapper LiteratureMapper
++ String upload_literature(String,Integer,String,Integer)
++ String download_literature()
+}
+class com.evan.seprojrearend.service.MarkService {
 }
 @enduml

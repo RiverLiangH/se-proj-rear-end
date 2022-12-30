@@ -4,11 +4,31 @@ class com.evan.seprojrearend.controller.SysUserController {
 + JsonResult findSysUser(String)
 + JsonResult validSysUser(String,String)
 + JsonResult newSysUser(String,String)
++ JsonResult importStudentByExcel(MultipartFile,Integer)
++ JsonResult importTeacherByExcel(MultipartFile,Integer)
 + JsonResult bindVirtualAccount(String,Integer)
+}
+class com.evan.seprojrearend.controller.MarkController {
+}
+class com.evan.seprojrearend.controller.LiteratureController {
+- LiteratureService LiteratureService
++ JsonResult uploadLiterature(String,Integer,String,Integer)
 }
 class com.evan.seprojrearend.controller.LectureController {
 - LectureService LectureService
-+ JsonResult findSysUser(String,Integer,Integer,Integer)
++ JsonResult createCourse(String,Integer)
++ JsonResult getCourseList(Integer)
++ JsonResult deleteCourse(Integer)
++ JsonResult importSectionInfo(MultipartFile,Integer)
++ JsonResult getTeacherTakeList(Integer)
++ JsonResult getStudentTakeList(Integer)
++ JsonResult createSection(Integer,Integer,String)
++ JsonResult deleteSection(Integer)
++ JsonResult modifySection(Integer,Integer,String)
++ JsonResult getSectionList(Integer)
++ JsonResult createExp(String,Integer,Integer,Integer,String)
++ JsonResult getExpList(Integer)
++ JsonResult uploadReport(String,Integer,Integer,Integer)
 }
 class com.evan.seprojrearend.controller.HelloController {
 + String hello()
