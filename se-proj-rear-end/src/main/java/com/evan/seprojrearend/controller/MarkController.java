@@ -24,4 +24,30 @@ public class MarkController {
         }
         return JsonResult.isOk(re);
     }
+
+    //4.2 查看报告成绩
+    @PostMapping("mark/check_report_mark")
+    public JsonResult checkReportMark(){
+        String re = null;
+        //re = MarkService.setReportMark(exp_id,student_id,school_id,mark);
+        try {
+
+        }catch (Exception e){
+            return JsonResult.isError(10001,"未知错误");
+        }
+        return JsonResult.isOk(re);
+    }
+
+    //4.3 导出学生成绩
+    @PostMapping("mark/import_mark")
+    public JsonResult importStudentMark(){
+        String re = null;
+        //re = MarkService.setReportMark(exp_id,student_id,school_id,mark);
+        try {
+
+        }catch (Exception e){
+            return JsonResult.isError(10001,"未知错误");
+        }
+        return JsonResult.isOk(re);
+    }
 }

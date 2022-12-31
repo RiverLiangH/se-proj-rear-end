@@ -85,6 +85,24 @@
       order by ${orderByClause}
     </if>
   </select>
+  <!-- new mapper start-->
+  <select id="selectLiteratureList" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT literature_id, auto_increment_name
+    FROM LITERATURE
+    WHERE
+    LITERATURE.experiment_id = #{experimentId,jdbcType=DECIMAL} and
+    LITERATURE.school_id = #{schoolId,jdbcType=DECIMAL}
+  </select>
+  <!-- new mapper end-->
+  <!-- new mapper start-->
+  <select id="selectLiteratureUrl" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT literture_address
+    FROM LITERATURE
+    WHERE
+    LITERATURE.literature_id = #{literatureId,jdbcType=DECIMAL} and
+    LITERATURE.school_id = #{schoolId,jdbcType=DECIMAL}
+  </select>
+  <!-- new mapper end-->
   <select id="selectByPrimaryKey" parameterType="com.evan.seprojrearend.po.LiteratureKey" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

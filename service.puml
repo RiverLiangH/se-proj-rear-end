@@ -39,5 +39,9 @@ class com.evan.seprojrearend.service.LiteratureService {
 + String download_literature()
 }
 class com.evan.seprojrearend.service.MarkService {
+- com.evan.seprojrearend.mapper.ReportsMapper ReportsMapper
++ String setReportMark(Integer,Integer,Integer,Integer)
++ String checkReportMark()
++ String importStudentMark()
 }
 @enduml

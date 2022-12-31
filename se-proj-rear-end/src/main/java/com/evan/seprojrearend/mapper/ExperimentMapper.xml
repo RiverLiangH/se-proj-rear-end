@@ -136,6 +136,18 @@
       #{sectionId,jdbcType=DECIMAL}, #{teacherId,jdbcType=DECIMAL}, #{isDeleted,jdbcType=DECIMAL}, 
       #{experimentContext,jdbcType=CLOB})
   </insert>
+  <!-- new mapper start-->
+  <select id="selectExperimentInfo" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT experiment_name, experiment_context,mark
+    FROM EXPERIMENT,REPORTS
+    WHERE
+    EXPERIMENT.experiment_id = #{experimentId,jdbcType=DECIMAL} and
+    EXPERIMENT.school_id = #{schoolId,jdbcType=DECIMAL} and
+    REPORTS.experiment_id = EXPERIMENT.experiment_id and
+    REPORTS.student_id = #{studentId,jdbcType=DECIMAL} and
+    EXPERIMENT.is_deleted = 0
+  </select>
+  <!-- new mapper end-->
   <insert id="insertSelective" parameterType="com.evan.seprojrearend.po.Experiment">
     insert into EXPERIMENT
     <trim prefix="(" suffix=")" suffixOverrides=",">

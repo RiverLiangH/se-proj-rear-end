@@ -33,4 +33,18 @@ public class MarkService {
         ReportsMapper.updateByExampleSelective(markRe,findReport);
         return "True";
     }
+
+    //4.2 查看报告成绩
+    public String checkReportMark(){
+
+        return "True";
+    }
+
+    //4.3 导出学生成绩
+    public String importStudentMark(){
+
+
+        return "True";
+    }
+
 }

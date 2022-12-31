@@ -3,9 +3,12 @@ package com.evan.seprojrearend.controller;
 import com.evan.seprojrearend.common.JsonResult;
 import com.evan.seprojrearend.service.LiteratureService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.math.BigDecimal;
 
 @RestController
 public class LiteratureController {
@@ -29,11 +32,25 @@ public class LiteratureController {
     }
 
     //3.2 下载教学资料
-    @PostMapping("literature/download")
-    public JsonResult downloadLiterature(){
+    @GetMapping("literature/download/{literature_id}/{school_id}")
+    public JsonResult downloadLiterature(@PathVariable BigDecimal literature_id,@PathVariable BigDecimal school_id){
+        String re = null;
+        re = LiteratureService.download_literature(literature_id,school_id).toString();
+        /*
+        try {
+            re = LiteratureService.download_literature(literature_id,school_id).toString();
+        }catch (Exception e){
+            return JsonResult.isError(10001,"未知错误");
+        }*/
+        return JsonResult.isOk(re);
+    }
+
+    //3.3 返回某实验下所有教学资料列表
+    @GetMapping("literature/get_literature_list/{experiment_id}/{school_id}")
+    public JsonResult getLiteratureList(@PathVariable BigDecimal experiment_id,@PathVariable BigDecimal school_id){
         String re = null;
         try {
-            //re = LiteratureService.upload_literature(name,exp_id,literature_url,school_id);
+            re = LiteratureService.getLiteratureList(experiment_id,school_id).toString();
         }catch (Exception e){
             return JsonResult.isError(10001,"未知错误");
         }

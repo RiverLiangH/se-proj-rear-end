@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -18,16 +19,14 @@ public class LectureController {
     @Autowired
     private LectureService LectureService;
     //2.1.1.1 责任教师设立课程
-    @PostMapping("lecture/set_course/{cour_name}/{res_teacher_id}")
-    public JsonResult createCourse(@PathVariable String cour_name,@PathVariable Integer res_teacher_id){
+    @PostMapping("lecture/set_course/{cour_name}/{res_teacher_id}/{school_id}/{course_outline}")
+    public JsonResult createCourse(@PathVariable String cour_name,@PathVariable BigDecimal res_teacher_id,@PathVariable BigDecimal school_id,@PathVariable String course_outline){
         String re = null;
-        re = LectureService.createCourse(cour_name,res_teacher_id);
-        /*
         try {
-            re = LectureService.createCourse(cour_name,res_teacher_id);
+            re = LectureService.createCourse(cour_name,res_teacher_id,school_id,course_outline);
         }catch (Exception e){
             return JsonResult.isError(10001,"未知错误");
-        }*/
+        }
         return JsonResult.isOk(re);
     }
 
@@ -103,14 +102,16 @@ public class LectureController {
     }
 
     //2.2.1.1 责任教师设立section
-    @PostMapping("lecture/set_sec/{course_id}/{teacher_id}/{section_time}")
-    public JsonResult createSection(@PathVariable Integer course_id,@PathVariable Integer teacher_id,@PathVariable String section_time){
+    @PostMapping("lecture/set_sec/{course_id}/{teacher_id}/{section_time}/{school_id}")
+    public JsonResult createSection(@PathVariable Integer course_id,@PathVariable Integer teacher_id,@PathVariable String section_time,@PathVariable Integer school_id){
         String re = null;
+        re = LectureService.createSection(course_id,teacher_id,section_time,school_id);
+        /*
         try {
-            re = LectureService.createSection(course_id,teacher_id,section_time);
+            re = LectureService.createSection(course_id,teacher_id,section_time,school_id);
         }catch (Exception e){
             return JsonResult.isError(10001,"未知错误");
-        }
+        }*/
         return JsonResult.isOk(re);
     }
 
@@ -173,6 +174,20 @@ public class LectureController {
         }catch (Exception e){
             return JsonResult.isError(10001,"未知错误");
         }
+        return JsonResult.isOk(re);
+    }
+
+    //2.3.2.2 返回具体的实验内容
+    @GetMapping("lecture/get_exp_info/{experiment_id}/{student_id}/{school_id}")
+    public JsonResult getExperimentInfo(@PathVariable Integer experiment_id,@PathVariable Integer student_id,@PathVariable Integer school_id){
+        String re = null;
+        re = LectureService.getExpInfo(BigDecimal.valueOf(experiment_id),BigDecimal.valueOf(student_id),BigDecimal.valueOf(school_id)).toString();
+        /*
+        try {
+            re = LectureService.getExpInfo(BigDecimal.valueOf(experiment_id),BigDecimal.valueOf(student_id),BigDecimal.valueOf(school_id)).toString();
+        }catch (Exception e){
+            return JsonResult.isError(10001,"未知错误");
+        }*/
         return JsonResult.isOk(re);
     }
 

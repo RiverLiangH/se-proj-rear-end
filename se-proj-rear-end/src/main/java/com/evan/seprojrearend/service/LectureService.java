@@ -41,16 +41,14 @@ public class LectureService {
     }
 
     //2.1.1.1 设立课程
-    public String createCourse(String cour_name, Integer res_teacher_id){
+    public String createCourse(String cour_name, BigDecimal res_teacher_id, BigDecimal school_id,String outline){
         //插入
         Course newCourse = new Course();
         newCourse.setCourseName(cour_name);
-        newCourse.setResTeacherId(BigDecimal.valueOf(res_teacher_id));
+        newCourse.setResTeacherId(res_teacher_id);
         newCourse.setIsDeleted(BigDecimal.valueOf(0));
-        //查找责任教师所属学校
-        //BigDecimal school_id = (TeacherMapper.selectByPrimaryKey(res_teacher_id)).getSchoolId();
-        //newCourse.setSchoolId(school_id);
-        newCourse.setSchoolId(BigDecimal.valueOf(1));
+        newCourse.setSchoolId(school_id);
+        newCourse.setCourseOutline(outline);
         CourseMapper.insert(newCourse);
         return "True";
     }
@@ -101,16 +99,13 @@ public class LectureService {
     }
 
     //2.2.1.1 设立section
-    public String createSection(Integer course_id, Integer teacher_id, String Section_time){
+    public String createSection(Integer course_id, Integer teacher_id, String Section_time,Integer school_id){
         CourSection newSec = new CourSection();
         newSec.setCourseId(BigDecimal.valueOf(course_id));
         newSec.setTeacherId(BigDecimal.valueOf(teacher_id));
         newSec.setSectionTime(Section_time);
-        //查找
-        //BigDecimal school_id = (TeacherMapper.selectByPrimaryKey(teacher_id)).getSchoolId();
-        //newSec.setSchoolId(school_id);
-        newSec.setSchoolId(BigDecimal.valueOf(1));
-        CourSectionMapper.insert(newSec);
+        newSec.setSchoolId(BigDecimal.valueOf(school_id));
+        CourSectionMapper.insertSelective(newSec);
         return "True";
     }
 
@@ -174,6 +169,11 @@ public class LectureService {
         criteria.andIsDeletedEqualTo(BigDecimal.valueOf(0));//未删除
         List<Experiment> queryAllExp = ExperimentMapper.selectByExample(findSection);
         return new ObjectMapper().writeValueAsString(queryAllExp);
+    }
+
+    //2.3.2.2 返回具体的实验内容
+    public List<JSONObject> getExpInfo(BigDecimal exp_id,BigDecimal student_id,BigDecimal school_id){
+        return ExperimentMapper.selectExperimentInfo(exp_id,student_id,school_id);
     }
 
     //2.4.1.1 学生上传报告

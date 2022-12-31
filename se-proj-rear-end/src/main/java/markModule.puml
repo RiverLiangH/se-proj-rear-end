@@ -1,0 +1,76 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+com.evan.seprojrearend.po.Reports <|-- com.evan.seprojrearend.mapper.ReportsMapper
+com.evan.seprojrearend.po.ScoreInfo <|-- com.evan.seprojrearend.mapper.ScoreInfoMapper
+
+com.evan.seprojrearend.mapper.ReportsMapper <|-- com.evan.seprojrearend.service.MarkService
+com.evan.seprojrearend.mapper.ScoreInfoMapper <|-- com.evan.seprojrearend.service.MarkService
+com.evan.seprojrearend.service.MarkService <|-- com.evan.seprojrearend.controller.MarkController
+
+class com.evan.seprojrearend.po.Reports {
+- Date finData
+- BigDecimal mark
+- String reportAddress
+- BigDecimal teacherId
++ Date getFinData()
++ void setFinData(Date)
++ BigDecimal getMark()
++ void setMark(BigDecimal)
++ String getReportAddress()
++ void setReportAddress(String)
++ BigDecimal getTeacherId()
++ void setTeacherId(BigDecimal)
+}
+
+class com.evan.seprojrearend.po.ScoreInfo {
+- BigDecimal score
+- BigDecimal isDeleted
++ BigDecimal getScore()
++ void setScore(BigDecimal)
++ BigDecimal getIsDeleted()
++ void setIsDeleted(BigDecimal)
+}
+
+interface com.evan.seprojrearend.mapper.ReportsMapper {
+~ long countByExample(ReportsExample)
+~ int deleteByExample(ReportsExample)
+~ int deleteByPrimaryKey(ReportsKey)
+~ int insert(Reports)
+~ int insertSelective(Reports)
+~ List<Reports> selectByExample(ReportsExample)
+~ Reports selectByPrimaryKey(ReportsKey)
+~ int updateByExampleSelective(Reports,ReportsExample)
+~ int updateByExample(Reports,ReportsExample)
+~ int updateByPrimaryKeySelective(Reports)
+~ int updateByPrimaryKey(Reports)
+}
+
+interface com.evan.seprojrearend.mapper.ScoreInfoMapper {
+~ long countByExample(ScoreInfoExample)
+~ int deleteByExample(ScoreInfoExample)
+~ int deleteByPrimaryKey(ScoreInfoKey)
+~ int insert(ScoreInfo)
+~ int insertSelective(ScoreInfo)
+~ List<ScoreInfo> selectByExample(ScoreInfoExample)
+~ ScoreInfo selectByPrimaryKey(ScoreInfoKey)
+~ int updateByExampleSelective(ScoreInfo,ScoreInfoExample)
+~ int updateByExample(ScoreInfo,ScoreInfoExample)
+~ int updateByPrimaryKeySelective(ScoreInfo)
+~ int updateByPrimaryKey(ScoreInfo)
+}
+
+class com.evan.seprojrearend.service.MarkService {
+- com.evan.seprojrearend.mapper.ReportsMapper ReportsMapper
++ String setReportMark(Integer,Integer,Integer,Integer)
++ String checkReportMark()
++ String importStudentMark()
+}
+
+class com.evan.seprojrearend.controller.MarkController {
+- com.evan.seprojrearend.service.MarkService MarkService
++ JsonResult setReportMark(Integer,Integer,Integer,Integer)
++ JsonResult checkReportMark()
++ JsonResult importStudentMark()
+}
+@enduml

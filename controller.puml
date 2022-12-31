@@ -9,10 +9,14 @@ class com.evan.seprojrearend.controller.SysUserController {
 + JsonResult bindVirtualAccount(String,Integer)
 }
 class com.evan.seprojrearend.controller.MarkController {
+- com.evan.seprojrearend.service.MarkService MarkService
++ JsonResult setReportMark(Integer,Integer,Integer,Integer)
++ JsonResult checkReportMark()
 }
 class com.evan.seprojrearend.controller.LiteratureController {
 - LiteratureService LiteratureService
 + JsonResult uploadLiterature(String,Integer,String,Integer)
++ JsonResult downloadLiterature()
 }
 class com.evan.seprojrearend.controller.LectureController {
 - LectureService LectureService
