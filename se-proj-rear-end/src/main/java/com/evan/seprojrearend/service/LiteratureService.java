@@ -33,7 +33,7 @@ public class LiteratureService {
         return LiteratureMapper.selectLiteratureUrl(literature_id,school_id);
     }
 
-    //3.3 返回某实验下所有教学资料列表
+    //3.4 返回某实验下所有教学资料列表
     public List<JSONObject> getLiteratureList(BigDecimal experiment_id,BigDecimal school_id){
         return LiteratureMapper.selectLiteratureList(experiment_id,school_id);
     }

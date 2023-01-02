@@ -6,6 +6,7 @@ import com.evan.seprojrearend.common.JsonResult;
 import com.evan.seprojrearend.po.SecInfoExcel;
 import com.evan.seprojrearend.po.SysMember;
 import com.evan.seprojrearend.service.LectureService;
+import com.evan.seprojrearend.service.OssTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +22,10 @@ import java.util.List;
 public class LectureController {
     @Autowired
     private LectureService LectureService;
+
+    @Autowired
+    private OssTemplate OssTemplate;
+
     //2.1.1.1 责任教师设立课程
     @PostMapping("lecture/set_course/{cour_name}/{res_teacher_id}/{school_id}/{course_outline}")
     public JsonResult createCourse(@PathVariable String cour_name,@PathVariable BigDecimal res_teacher_id,@PathVariable BigDecimal school_id,@PathVariable String course_outline){
@@ -108,13 +113,12 @@ public class LectureController {
     @PostMapping("lecture/set_sec/{course_id}/{teacher_id}/{section_time}/{school_id}")
     public JsonResult createSection(@PathVariable Integer course_id,@PathVariable Integer teacher_id,@PathVariable String section_time,@PathVariable Integer school_id){
         String re = null;
-        re = LectureService.createSection(course_id,teacher_id,section_time,school_id);
-        /*
+        //re = LectureService.createSection(course_id,teacher_id,section_time,school_id);
         try {
             re = LectureService.createSection(course_id,teacher_id,section_time,school_id);
         }catch (Exception e){
             return JsonResult.isError(10001,"未知错误");
-        }*/
+        }
         return JsonResult.isOk(re);
     }
 
@@ -185,13 +189,12 @@ public class LectureController {
     @GetMapping("lecture/sec_info_list/{section_id}/{school_id}")
     public JsonResult getSectionInfoList(@PathVariable BigDecimal section_id,@PathVariable BigDecimal school_id){
         String re = null;
-        re = LectureService.getSecInfoList(section_id,school_id).toString();
-        /*
+        //re = LectureService.getSecInfoList(section_id,school_id).toString();
         try {
             re = LectureService.getSecInfoList(section_id,school_id).toString();
         }catch (Exception e){
             return JsonResult.isError(10001,"未知错误");
-        }*/
+        }
         return JsonResult.isOk(re);
     }
 
@@ -225,22 +228,35 @@ public class LectureController {
     @GetMapping("lecture/get_exp_info/{experiment_id}/{student_id}/{school_id}")
     public JsonResult getExperimentInfo(@PathVariable Integer experiment_id,@PathVariable Integer student_id,@PathVariable Integer school_id){
         String re = null;
-        re = LectureService.getExpInfo(BigDecimal.valueOf(experiment_id),BigDecimal.valueOf(student_id),BigDecimal.valueOf(school_id)).toString();
-        /*
+        //re = LectureService.getExpInfo(BigDecimal.valueOf(experiment_id),BigDecimal.valueOf(student_id),BigDecimal.valueOf(school_id)).toString();
         try {
             re = LectureService.getExpInfo(BigDecimal.valueOf(experiment_id),BigDecimal.valueOf(student_id),BigDecimal.valueOf(school_id)).toString();
         }catch (Exception e){
             return JsonResult.isError(10001,"未知错误");
-        }*/
+        }
         return JsonResult.isOk(re);
     }
 
     //2.4.1.1 学生上传报告
-    @PostMapping("lecture/upload_report/{report_url}/{exp_id}/{stu_id}/{school_id}")
-    public JsonResult uploadReport(@PathVariable String report_url,@PathVariable Integer exp_id,@PathVariable Integer stu_id,@PathVariable Integer school_id){
+    @PostMapping(value = "lecture/upload_report/{exp_id}/{stu_id}/{school_id}")
+    public JsonResult uploadReport(@RequestPart("file") MultipartFile file,@PathVariable Integer exp_id,@PathVariable Integer stu_id,@PathVariable Integer school_id){
         String re = null;
+        //re = LectureService.uploadReport(OssTemplate.upload(file),exp_id,stu_id,school_id);
         try {
-            re = LectureService.uploadReport(report_url,exp_id,stu_id,school_id);
+            re = LectureService.uploadReport(OssTemplate.upload(file),exp_id,stu_id,school_id);
+        }catch (Exception e){
+            return JsonResult.isError(10001,"未知错误");
+        }
+        return JsonResult.isOk(re);
+    }
+
+    //2.4.2.1 教师下载报告
+    @GetMapping("lecture/get_report/{experiment_id}/{student_id}/{school_id}")
+    public JsonResult getReport(@PathVariable BigDecimal experiment_id,@PathVariable BigDecimal student_id,@PathVariable BigDecimal school_id){
+        String re = null;
+        //re = LectureService.getExpInfo(BigDecimal.valueOf(experiment_id),BigDecimal.valueOf(student_id),BigDecimal.valueOf(school_id)).toString();
+        try {
+            re = LectureService.downloadReport(experiment_id,student_id,school_id).toString();
         }catch (Exception e){
             return JsonResult.isError(10001,"未知错误");
         }

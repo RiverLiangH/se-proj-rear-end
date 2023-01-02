@@ -225,6 +225,9 @@ public class LectureService {
         return "True";
     }
 
-
+    //2.4.2.1 教师下载报告
+    public List<JSONObject> downloadReport(BigDecimal exp_id,BigDecimal stu_id,BigDecimal school_id){
+        return ReportsMapper.selectUrlByReportKey(exp_id,stu_id,school_id);
+    }
 
 }

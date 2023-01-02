@@ -169,6 +169,16 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+  <!-- new mapper start-->
+  <select id="selectUrlByReportKey" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT report_address
+    FROM REPORTS
+    WHERE
+    REPORTS.experiment_id = #{experimentId,jdbcType=DECIMAL} and
+    REPORTS.student_id = #{studentId,jdbcType=DECIMAL} and
+    REPORTS.school_id = #{schoolId,jdbcType=DECIMAL}
+  </select>
+  <!-- new mapper end-->
   <update id="updateByExampleSelective" parameterType="map">
     update REPORTS
     <set>

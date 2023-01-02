@@ -1,6 +1,7 @@
 package com.evan.seprojrearend.controller;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.fastjson.JSONObject;
 import com.evan.seprojrearend.common.JsonResult;
 import com.evan.seprojrearend.po.SysMember;
 import com.evan.seprojrearend.po.SysUser;
@@ -109,9 +110,16 @@ public class SysUserController {
     @GetMapping("user/user_school_mes/{email}")
     public JsonResult userSchoolMes(@PathVariable String email){
         String re = null;
-        //re = SysUserService.getUserSchoolMesStu(email).toString()+SysUserService.getUserSchoolMesTea(email).toString()+SysUserService.getUserSchoolMesAd(email).toString();
+        /*
+        List<JSONObject> result = SysUserService.getUserSchoolMesStu(email);
+        result.addAll(SysUserService.getUserSchoolMesTea(email));
+        result.addAll(SysUserService.getUserSchoolMesAd(email));
+        re = result.toString();*/
         try {
-            re = SysUserService.getUserSchoolMesStu(email).toString()+SysUserService.getUserSchoolMesTea(email).toString()+SysUserService.getUserSchoolMesAd(email).toString();
+            List<JSONObject> result = SysUserService.getUserSchoolMesStu(email);
+            result.addAll(SysUserService.getUserSchoolMesTea(email));
+            result.addAll(SysUserService.getUserSchoolMesAd(email));
+            re = result.toString();
         }catch (Exception e){
             return JsonResult.isError(10001,"未知错误");
         }
