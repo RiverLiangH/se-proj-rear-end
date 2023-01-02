@@ -1,6 +1,7 @@
 package com.evan.seprojrearend.po;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class Experiment extends ExperimentKey {
     private String experimentName;
@@ -10,6 +11,8 @@ public class Experiment extends ExperimentKey {
     private BigDecimal teacherId;
 
     private BigDecimal isDeleted;
+
+    private Date deadline;
 
     private String experimentContext;
 
@@ -43,6 +46,14 @@ public class Experiment extends ExperimentKey {
 
     public void setIsDeleted(BigDecimal isDeleted) {
         this.isDeleted = isDeleted;
+    }
+
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
     }
 
     public String getExperimentContext() {

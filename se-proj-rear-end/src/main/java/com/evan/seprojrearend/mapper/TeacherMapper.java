@@ -3,8 +3,6 @@ package com.evan.seprojrearend.mapper;
 import com.evan.seprojrearend.po.Teacher;
 import com.evan.seprojrearend.po.TeacherExample;
 import com.evan.seprojrearend.po.TeacherKey;
-
-import java.math.BigDecimal;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,7 +19,7 @@ public interface TeacherMapper {
 
     List<Teacher> selectByExample(TeacherExample example);
 
-    Teacher selectByPrimaryKey(BigDecimal key);
+    Teacher selectByPrimaryKey(TeacherKey key);
 
     int updateByExampleSelective(@Param("record") Teacher record, @Param("example") TeacherExample example);
 

@@ -81,6 +81,39 @@
       order by ${orderByClause}
     </if>
   </select>
+  <!-- new mapper start-->
+  <select id="selectUserIsStudent" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT SCHOOL.school_name, SCHOOL.school_id,students_id
+    FROM USER_SCHOOL_MES,SCHOOL,STUDENT
+    WHERE
+    USER_SCHOOL_MES.email = #{email,jdbcType=DECIMAL} and
+    SCHOOL.school_id = USER_SCHOOL_MES.school_id and
+    STUDENT.school_id = USER_SCHOOL_MES.school_id and
+    STUDENT.mail_address = USER_SCHOOL_MES.email
+  </select>
+  <!-- new mapper end-->
+  <!-- new mapper start-->
+  <select id="selectUserIsTeacher" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT SCHOOL.school_name, SCHOOL.school_id,teacher_id
+    FROM USER_SCHOOL_MES,SCHOOL,TEACHER
+    WHERE
+    USER_SCHOOL_MES.email = #{email,jdbcType=DECIMAL} and
+    SCHOOL.school_id = USER_SCHOOL_MES.school_id and
+    TEACHER.school_id = USER_SCHOOL_MES.school_id and
+    TEACHER.mail_address = USER_SCHOOL_MES.email
+  </select>
+  <!-- new mapper end-->
+  <!-- new mapper start-->
+  <select id="selectUserIsAdministrator" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT SCHOOL.school_name, SCHOOL.school_id,ad_id
+    FROM USER_SCHOOL_MES,SCHOOL,ADMINISTRATOR
+    WHERE
+    USER_SCHOOL_MES.email = #{email,jdbcType=DECIMAL} and
+    SCHOOL.school_id = USER_SCHOOL_MES.school_id and
+    ADMINISTRATOR.school_id = USER_SCHOOL_MES.school_id and
+    ADMINISTRATOR.mail_address = USER_SCHOOL_MES.email
+  </select>
+  <!-- new mapper end-->
   <delete id="deleteByPrimaryKey" parameterType="com.evan.seprojrearend.po.SysSchoolMesKey">
     delete from USER_SCHOOL_MES
     where EMAIL = #{email,jdbcType=VARCHAR}

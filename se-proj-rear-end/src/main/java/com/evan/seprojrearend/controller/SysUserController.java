@@ -92,7 +92,7 @@ public class SysUserController {
         return JsonResult.isOk(re);
     }
 
-    //1.4 用户绑定虚拟账户
+    //1.5 用户绑定虚拟账户
     @PostMapping("user/bond_vir_account/{email}/{school_id}")
     public JsonResult bindVirtualAccount(@PathVariable String email,@PathVariable Integer school_id)throws Exception{
         String re = null;
@@ -104,7 +104,17 @@ public class SysUserController {
         return JsonResult.isOk(re);
     }
 
-
-
+    //1.6 返回用户拥有的系统
+    @GetMapping("user/user_school_mes/{email}")
+    public JsonResult userSchoolMes(@PathVariable String email){
+        String re = null;
+        //re = SysUserService.getUserSchoolMesStu(email).toString()+SysUserService.getUserSchoolMesTea(email).toString()+SysUserService.getUserSchoolMesAd(email).toString();
+        try {
+            re = SysUserService.getUserSchoolMesStu(email).toString()+SysUserService.getUserSchoolMesTea(email).toString()+SysUserService.getUserSchoolMesAd(email).toString();
+        }catch (Exception e){
+            return JsonResult.isError(10001,"未知错误");
+        }
+        return JsonResult.isOk(re);
+    }
 
 }

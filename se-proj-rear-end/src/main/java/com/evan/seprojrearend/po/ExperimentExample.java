@@ -2,6 +2,7 @@ package com.evan.seprojrearend.po;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ExperimentExample {
@@ -472,6 +473,66 @@ public class ExperimentExample {
 
         public Criteria andIsDeletedNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("IS_DELETED not between", value1, value2, "isDeleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeadlineIsNull() {
+            addCriterion("DEADLINE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeadlineIsNotNull() {
+            addCriterion("DEADLINE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeadlineEqualTo(Date value) {
+            addCriterion("DEADLINE =", value, "deadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeadlineNotEqualTo(Date value) {
+            addCriterion("DEADLINE <>", value, "deadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeadlineGreaterThan(Date value) {
+            addCriterion("DEADLINE >", value, "deadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeadlineGreaterThanOrEqualTo(Date value) {
+            addCriterion("DEADLINE >=", value, "deadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeadlineLessThan(Date value) {
+            addCriterion("DEADLINE <", value, "deadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeadlineLessThanOrEqualTo(Date value) {
+            addCriterion("DEADLINE <=", value, "deadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeadlineIn(List<Date> values) {
+            addCriterion("DEADLINE in", values, "deadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeadlineNotIn(List<Date> values) {
+            addCriterion("DEADLINE not in", values, "deadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeadlineBetween(Date value1, Date value2) {
+            addCriterion("DEADLINE between", value1, value2, "deadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeadlineNotBetween(Date value1, Date value2) {
+            addCriterion("DEADLINE not between", value1, value2, "deadline");
             return (Criteria) this;
         }
     }

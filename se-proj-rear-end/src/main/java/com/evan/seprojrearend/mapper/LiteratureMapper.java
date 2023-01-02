@@ -22,11 +22,11 @@ public interface LiteratureMapper {
 
     List<Literature> selectByExample(LiteratureExample example);
 
-    Literature selectByPrimaryKey(LiteratureKey key);
-
-    List<JSONObject> selectLiteratureList(@Param("experimentId") BigDecimal experimentId,@Param("schoolId") BigDecimal schoolId);
+    List<JSONObject> selectLiteratureList(@Param("experimentId") BigDecimal experimentId, @Param("schoolId") BigDecimal schoolId);
 
     List<JSONObject> selectLiteratureUrl(@Param("literatureId") BigDecimal literatureId,@Param("schoolId") BigDecimal schoolId);
+
+    Literature selectByPrimaryKey(LiteratureKey key);
 
     int updateByExampleSelective(@Param("record") Literature record, @Param("example") LiteratureExample example);
 

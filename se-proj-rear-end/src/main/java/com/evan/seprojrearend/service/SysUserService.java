@@ -1,5 +1,6 @@
 package com.evan.seprojrearend.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.evan.seprojrearend.mapper.AdministratorMapper;
 import com.evan.seprojrearend.po.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -151,4 +152,16 @@ public class SysUserService {
         }
         return "False";
     }
+
+    //1.6 返回用户拥有的系统
+    public List<JSONObject> getUserSchoolMesStu(String email){
+        return SysSchoolMesMapper.selectUserIsStudent(email);
+    }
+    public List<JSONObject> getUserSchoolMesTea(String email){
+        return SysSchoolMesMapper.selectUserIsTeacher(email);
+    }
+    public List<JSONObject> getUserSchoolMesAd(String email){
+        return SysSchoolMesMapper.selectUserIsAdministrator(email);
+    }
+
 }

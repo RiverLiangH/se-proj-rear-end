@@ -22,11 +22,11 @@ public interface CourSectionMapper {
 
     List<CourSection> selectByExampleWithBLOBs(CourSectionExample example);
 
-    List<JSONObject> selectTakeByTeacherId(@Param("teacherId")BigDecimal teacherId);
+    List<CourSection> selectByExample(CourSectionExample example);
+
+    List<JSONObject> selectTakeByTeacherId(@Param("teacherId") BigDecimal teacherId);
 
     List<JSONObject> selectTakeByStudentId(@Param("studentId")BigDecimal studentId);
-
-    List<CourSection> selectByExample(CourSectionExample example);
 
     CourSection selectByPrimaryKey(CourSectionKey key);
 

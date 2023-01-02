@@ -8,6 +8,7 @@
     <result column="SECTION_ID" jdbcType="DECIMAL" property="sectionId" />
     <result column="TEACHER_ID" jdbcType="DECIMAL" property="teacherId" />
     <result column="IS_DELETED" jdbcType="DECIMAL" property="isDeleted" />
+    <result column="DEADLINE" jdbcType="TIMESTAMP" property="deadline" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.evan.seprojrearend.po.Experiment">
     <result column="EXPERIMENT_CONTEXT" jdbcType="CLOB" property="experimentContext" />
@@ -71,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    EXPERIMENT_ID, SCHOOL_ID, EXPERIMENT_NAME, SECTION_ID, TEACHER_ID, IS_DELETED
+    EXPERIMENT_ID, SCHOOL_ID, EXPERIMENT_NAME, SECTION_ID, TEACHER_ID, IS_DELETED, DEADLINE
   </sql>
   <sql id="Blob_Column_List">
     EXPERIMENT_CONTEXT
@@ -131,10 +132,10 @@
   <insert id="insert" parameterType="com.evan.seprojrearend.po.Experiment">
     insert into EXPERIMENT (EXPERIMENT_ID, SCHOOL_ID, EXPERIMENT_NAME, 
       SECTION_ID, TEACHER_ID, IS_DELETED, 
-      EXPERIMENT_CONTEXT)
+      DEADLINE, EXPERIMENT_CONTEXT)
     values (#{experimentId,jdbcType=DECIMAL}, #{schoolId,jdbcType=DECIMAL}, #{experimentName,jdbcType=VARCHAR}, 
       #{sectionId,jdbcType=DECIMAL}, #{teacherId,jdbcType=DECIMAL}, #{isDeleted,jdbcType=DECIMAL}, 
-      #{experimentContext,jdbcType=CLOB})
+      #{deadline,jdbcType=TIMESTAMP}, #{experimentContext,jdbcType=CLOB})
   </insert>
   <insert id="insertSelective" parameterType="com.evan.seprojrearend.po.Experiment">
     insert into EXPERIMENT
@@ -156,6 +157,9 @@
       </if>
       <if test="isDeleted != null">
         IS_DELETED,
+      </if>
+      <if test="deadline != null">
+        DEADLINE,
       </if>
       <if test="experimentContext != null">
         EXPERIMENT_CONTEXT,
@@ -179,6 +183,9 @@
       </if>
       <if test="isDeleted != null">
         #{isDeleted,jdbcType=DECIMAL},
+      </if>
+      <if test="deadline != null">
+        #{deadline,jdbcType=TIMESTAMP},
       </if>
       <if test="experimentContext != null">
         #{experimentContext,jdbcType=CLOB},
@@ -212,6 +219,9 @@
       <if test="record.isDeleted != null">
         IS_DELETED = #{record.isDeleted,jdbcType=DECIMAL},
       </if>
+      <if test="record.deadline != null">
+        DEADLINE = #{record.deadline,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.experimentContext != null">
         EXPERIMENT_CONTEXT = #{record.experimentContext,jdbcType=CLOB},
       </if>
@@ -228,6 +238,7 @@
       SECTION_ID = #{record.sectionId,jdbcType=DECIMAL},
       TEACHER_ID = #{record.teacherId,jdbcType=DECIMAL},
       IS_DELETED = #{record.isDeleted,jdbcType=DECIMAL},
+      DEADLINE = #{record.deadline,jdbcType=TIMESTAMP},
       EXPERIMENT_CONTEXT = #{record.experimentContext,jdbcType=CLOB}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -240,7 +251,8 @@
       EXPERIMENT_NAME = #{record.experimentName,jdbcType=VARCHAR},
       SECTION_ID = #{record.sectionId,jdbcType=DECIMAL},
       TEACHER_ID = #{record.teacherId,jdbcType=DECIMAL},
-      IS_DELETED = #{record.isDeleted,jdbcType=DECIMAL}
+      IS_DELETED = #{record.isDeleted,jdbcType=DECIMAL},
+      DEADLINE = #{record.deadline,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -260,6 +272,9 @@
       <if test="isDeleted != null">
         IS_DELETED = #{isDeleted,jdbcType=DECIMAL},
       </if>
+      <if test="deadline != null">
+        DEADLINE = #{deadline,jdbcType=TIMESTAMP},
+      </if>
       <if test="experimentContext != null">
         EXPERIMENT_CONTEXT = #{experimentContext,jdbcType=CLOB},
       </if>
@@ -273,6 +288,7 @@
       SECTION_ID = #{sectionId,jdbcType=DECIMAL},
       TEACHER_ID = #{teacherId,jdbcType=DECIMAL},
       IS_DELETED = #{isDeleted,jdbcType=DECIMAL},
+      DEADLINE = #{deadline,jdbcType=TIMESTAMP},
       EXPERIMENT_CONTEXT = #{experimentContext,jdbcType=CLOB}
     where EXPERIMENT_ID = #{experimentId,jdbcType=DECIMAL}
       and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
@@ -282,7 +298,8 @@
     set EXPERIMENT_NAME = #{experimentName,jdbcType=VARCHAR},
       SECTION_ID = #{sectionId,jdbcType=DECIMAL},
       TEACHER_ID = #{teacherId,jdbcType=DECIMAL},
-      IS_DELETED = #{isDeleted,jdbcType=DECIMAL}
+      IS_DELETED = #{isDeleted,jdbcType=DECIMAL},
+      DEADLINE = #{deadline,jdbcType=TIMESTAMP}
     where EXPERIMENT_ID = #{experimentId,jdbcType=DECIMAL}
       and SCHOOL_ID = #{schoolId,jdbcType=DECIMAL}
   </update>
