@@ -12,9 +12,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class LectureController {
     @Autowired
     private LectureService LectureService;
@@ -141,6 +144,31 @@ public class LectureController {
         return JsonResult.isOk(re);
     }
 
+    //2.2.1.4 section_info中增加学生
+    @PostMapping("lecture/addStudentInSecInfo/{section_id}/{student_id}/{school_id}")
+    public JsonResult addStudentInSecInfo(@PathVariable BigDecimal section_id,@PathVariable BigDecimal student_id,@PathVariable BigDecimal school_id){
+        String re = null;
+        try {
+            re = LectureService.addStudentInSecInfo(section_id,student_id,school_id);
+            //re = LectureService.modifySection(section_id,teacher_id,section_time);
+        }catch (Exception e){
+            return JsonResult.isError(10001,"未知错误");
+        }
+        return JsonResult.isOk(re);
+    }
+
+    //2.2.1.5 section_info中删除学生
+    @PostMapping("lecture/delStudentInSecInfo/{section_id}/{student_id}/{school_id}")
+    public JsonResult delStudentInSecInfo(@PathVariable BigDecimal section_id,@PathVariable BigDecimal student_id,@PathVariable BigDecimal school_id){
+        String re = null;
+        try {
+            re = LectureService.deleteStudentInSecInfo(section_id,student_id,school_id);
+        }catch (Exception e){
+            return JsonResult.isError(10001,"未知错误");
+        }
+        return JsonResult.isOk(re);
+    }
+
     //2.2.2.1 返回课程section列表
     @GetMapping("lecture/sec_list/{course_id}")
     public JsonResult getSectionList(@PathVariable Integer course_id){
@@ -153,12 +181,28 @@ public class LectureController {
         return JsonResult.isOk(re);
     }
 
+    //2.2.2.2 返回某section的学生选课信息列表
+    @GetMapping("lecture/sec_info_list/{section_id}/{school_id}")
+    public JsonResult getSectionInfoList(@PathVariable BigDecimal section_id,@PathVariable BigDecimal school_id){
+        String re = null;
+        re = LectureService.getSecInfoList(section_id,school_id).toString();
+        /*
+        try {
+            re = LectureService.getSecInfoList(section_id,school_id).toString();
+        }catch (Exception e){
+            return JsonResult.isError(10001,"未知错误");
+        }*/
+        return JsonResult.isOk(re);
+    }
+
     //2.3.1.1 教师发布实验
-    @PostMapping("lecture/create_exp/{experiment_name}/{section_id}/{teacher_id}/{school_id}/{exp_content}")
-    public JsonResult createExp(@PathVariable String experiment_name,@PathVariable Integer section_id,@PathVariable Integer teacher_id,@PathVariable Integer school_id,@PathVariable String exp_content)throws Exception {
+    @PostMapping("lecture/create_exp/{experiment_name}/{section_id}/{teacher_id}/{school_id}/{deadline}")
+    public JsonResult createExp(@PathVariable String experiment_name, @PathVariable Integer section_id, @PathVariable Integer teacher_id, @PathVariable Integer school_id, @PathVariable String deadline)throws Exception {
         String re = null;
         try {
-            re = LectureService.newExperiment(experiment_name,section_id,teacher_id,school_id,exp_content);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date ddl_time=sdf.parse(deadline);
+            re = LectureService.newExperiment(experiment_name,section_id,teacher_id,school_id,ddl_time);
         }catch (Exception e){
             return JsonResult.isError(10001,"未知错误");
         }

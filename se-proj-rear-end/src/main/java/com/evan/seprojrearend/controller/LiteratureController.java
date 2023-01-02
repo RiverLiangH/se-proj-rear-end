@@ -3,14 +3,12 @@ package com.evan.seprojrearend.controller;
 import com.evan.seprojrearend.common.JsonResult;
 import com.evan.seprojrearend.service.LiteratureService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 
 @RestController
+@CrossOrigin
 public class LiteratureController {
     @Autowired
     private LiteratureService LiteratureService;

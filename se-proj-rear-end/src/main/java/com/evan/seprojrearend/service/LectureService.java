@@ -136,6 +136,32 @@ public class LectureService {
         return "True";
     }
 
+    //2.2.1.4 section_info中增加学生
+    public String addStudentInSecInfo(BigDecimal section_id,BigDecimal student_id,BigDecimal school_id){
+        SectionInfo newSecInfo = new SectionInfo();
+        newSecInfo.setSectionId(section_id);
+        newSecInfo.setStudentId(student_id);
+        newSecInfo.setSchoolId(school_id);
+        SectionInfoMapper.insertSelective(newSecInfo);
+        return "True";
+    }
+
+    //2.2.1.5 section_info中删除学生
+    public String deleteStudentInSecInfo(BigDecimal section_id,BigDecimal student_id,BigDecimal school_id){
+        //查找需要删除的section_info
+        SectionInfoExample findSecInfo = new SectionInfoExample();
+        SectionInfoExample.Criteria criteria = findSecInfo.createCriteria();
+        criteria.andSectionIdEqualTo(section_id);
+        criteria.andSchoolIdEqualTo(school_id);
+        criteria.andStudentIdEqualTo(student_id);
+
+        //修改isdelete属性
+        SectionInfo delInfo = new SectionInfo();
+        delInfo.setIsDeleted(BigDecimal.valueOf(1));
+        SectionInfoMapper.updateByExampleSelective(delInfo,findSecInfo);
+        return "True";
+    }
+
     //2.2.2.1 返回课程section列表
     public String getSectionList(Integer course_id) throws JsonProcessingException {
         CourSectionExample findSection = new CourSectionExample();
@@ -146,16 +172,22 @@ public class LectureService {
         return new ObjectMapper().writeValueAsString(queryAllSection);
     }
 
+    //2.2.2.2 返回某section的学生选课信息列表
+    public List<JSONObject> getSecInfoList(BigDecimal section_id,BigDecimal school_id){
+        return SectionInfoMapper.selectSecInfoList(section_id,school_id);
+    }
+
 
     //2.3.1.1 教师发布实验
-    public String newExperiment(String exp_name,Integer sec_id,Integer teacher_id,Integer school_id,String exp_content){
+    public String newExperiment(String exp_name,Integer sec_id,Integer teacher_id,Integer school_id,Date deadline){
         Experiment newExp = new Experiment();
         newExp.setExperimentName(exp_name);
         newExp.setSectionId(BigDecimal.valueOf(sec_id));
         newExp.setTeacherId(BigDecimal.valueOf(teacher_id));
         newExp.setSchoolId(BigDecimal.valueOf(school_id));
         newExp.setIsDeleted(BigDecimal.valueOf(0));
-        newExp.setExperimentContext(exp_content);
+        newExp.setDeadline(deadline);
+        newExp.setExperimentContext("No");
         ExperimentMapper.insert(newExp);
         return "True";
     }

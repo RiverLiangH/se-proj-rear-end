@@ -146,6 +146,16 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+  <!-- new mapper start-->
+  <select id="selectSecInfoList" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT SECTION_INFO.student_id, name
+    FROM SECTION_INFO,STUDENT
+    WHERE
+    SECTION_INFO.section_id = #{sectionId,jdbcType=DECIMAL} and
+    SECTION_INFO.school_id = #{schoolId,jdbcType=DECIMAL} and
+    STUDENT.students_id = SECTION_INFO.student_id
+  </select>
+  <!-- new mapper end-->
   <update id="updateByExampleSelective" parameterType="map">
     update SECTION_INFO
     <set>

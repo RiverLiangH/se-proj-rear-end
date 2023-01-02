@@ -17,6 +17,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class SysUserController {
     @Autowired
     private SysUserService SysUserService;
