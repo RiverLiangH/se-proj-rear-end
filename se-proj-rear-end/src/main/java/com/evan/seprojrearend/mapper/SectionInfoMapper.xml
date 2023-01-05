@@ -153,7 +153,8 @@
     WHERE
     SECTION_INFO.section_id = #{sectionId,jdbcType=DECIMAL} and
     SECTION_INFO.school_id = #{schoolId,jdbcType=DECIMAL} and
-    STUDENT.students_id = SECTION_INFO.student_id
+    STUDENT.students_id = SECTION_INFO.student_id and
+    SECTION_INFO.is_deleted = 0
   </select>
   <!-- new mapper end-->
   <update id="updateByExampleSelective" parameterType="map">

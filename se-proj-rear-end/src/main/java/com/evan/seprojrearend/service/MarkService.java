@@ -1,5 +1,6 @@
 package com.evan.seprojrearend.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.evan.seprojrearend.po.Course;
 import com.evan.seprojrearend.po.CourseExample;
 import com.evan.seprojrearend.po.Reports;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class MarkService {
@@ -34,10 +36,9 @@ public class MarkService {
         return "True";
     }
 
-    //4.2 查看报告成绩
-    public String checkReportMark(){
-
-        return "True";
+    //4.2 学生查看已上交的报告成绩
+    public List<JSONObject> checkReportMark(BigDecimal student_id,BigDecimal school_id){
+        return ReportsMapper.selectReportMark(student_id,school_id);
     }
 
     //4.3 导出学生成绩

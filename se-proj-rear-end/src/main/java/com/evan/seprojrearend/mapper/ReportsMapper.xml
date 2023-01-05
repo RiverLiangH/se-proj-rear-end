@@ -179,6 +179,27 @@
     REPORTS.school_id = #{schoolId,jdbcType=DECIMAL}
   </select>
   <!-- new mapper end-->
+  <!-- new mapper start-->
+  <select id="selectReportList" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT REPORTS.student_id,STUDENT.name,report_address,fin_data,mark
+    FROM REPORTS,STUDENT
+    WHERE
+    REPORTS.experiment_id = #{experimentId,jdbcType=DECIMAL} and
+    REPORTS.school_id = #{schoolId,jdbcType=DECIMAL} and
+    REPORTS.student_id = STUDENT.students_id
+  </select>
+  <!-- new mapper end-->
+  <!-- new mapper start-->
+  <select id="selectReportMark" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT STUDENT.name,REPORTS.experiment_id,experiment_name,mark,report_address
+    FROM REPORTS,STUDENT,EXPERIMENT
+    WHERE
+    REPORTS.student_id = #{studentId,jdbcType=DECIMAL} and
+    REPORTS.school_id = #{schoolId,jdbcType=DECIMAL} and
+    REPORTS.student_id = STUDENT.students_id and
+    EXPERIMENT.experiment_id = REPORTS.experiment_id
+  </select>
+  <!-- new mapper end-->
   <update id="updateByExampleSelective" parameterType="map">
     update REPORTS
     <set>

@@ -200,7 +200,7 @@
   </select>
   <!-- new mapper start-->
   <select id="selectTakeByTeacherId" resultType="com.alibaba.fastjson.JSONObject">
-    SELECT section_time, course_name,res_teacher_id
+    SELECT COUR_SECTION.section_id,COUR_SECTION.course_id,section_time, course_name,res_teacher_id
     FROM COUR_SECTION,COURSE
     WHERE
     COUR_SECTION.course_id = COURSE.course_id and COUR_SECTION.teacher_id = #{teacherId,jdbcType=DECIMAL}
@@ -208,7 +208,7 @@
   <!-- new mapper end-->
   <!-- new mapper start-->
   <select id="selectTakeByStudentId" resultType="com.alibaba.fastjson.JSONObject">
-    SELECT section_time, course_name
+    SELECT COUR_SECTION.section_id,COUR_SECTION.course_id,section_time, course_name
     FROM COUR_SECTION,COURSE,SECTION_INFO
     WHERE
     SECTION_INFO.student_id = #{studentId,jdbcType=DECIMAL} and SECTION_INFO.section_id = COUR_SECTION.section_id and COUR_SECTION.course_id = COURSE.course_id

@@ -54,10 +54,10 @@ public class SysUserController {
 
     //1.3 批量导入学生账户
     @PostMapping(value = "user/import_stu/{school_id}")
-    public JsonResult importStudentByExcel(@RequestPart("sys_file") MultipartFile sys_file,@PathVariable Integer school_id) throws IOException {
+    public JsonResult importStudentByExcel(@RequestPart("file") MultipartFile file,@PathVariable Integer school_id) throws IOException {
         String re = null;
         try {
-            List<SysMember> list = EasyExcel.read(sys_file.getInputStream())
+            List<SysMember> list = EasyExcel.read(file.getInputStream())
                     .head(SysMember.class)
                     .sheet()
                     .doReadSync();
@@ -75,10 +75,10 @@ public class SysUserController {
 
     //1.4 批量导入教师账户
     @PostMapping(value = "user/import_tea/{school_id}")
-    public JsonResult importTeacherByExcel(@RequestPart("sys_file") MultipartFile sys_file,@PathVariable Integer school_id) throws IOException {
+    public JsonResult importTeacherByExcel(@RequestPart("file") MultipartFile file,@PathVariable Integer school_id) throws IOException {
         String re = null;
         try {
-            List<SysMember> list = EasyExcel.read(sys_file.getInputStream())
+            List<SysMember> list = EasyExcel.read(file.getInputStream())
                     .head(SysMember.class)
                     .sheet()
                     .doReadSync();

@@ -24,6 +24,10 @@ public interface ReportsMapper {
 
     List<JSONObject> selectUrlByReportKey(@Param("experimentId") BigDecimal experimentId,@Param("studentId") BigDecimal studentId,@Param("schoolId") BigDecimal schoolId);
 
+    List<JSONObject> selectReportList(@Param("experimentId") BigDecimal experimentId,@Param("schoolId") BigDecimal schoolId);
+
+    List<JSONObject> selectReportMark(@Param("studentId") BigDecimal studentId,@Param("schoolId") BigDecimal schoolId);
+
     Reports selectByPrimaryKey(ReportsKey key);
 
     int updateByExampleSelective(@Param("record") Reports record, @Param("example") ReportsExample example);

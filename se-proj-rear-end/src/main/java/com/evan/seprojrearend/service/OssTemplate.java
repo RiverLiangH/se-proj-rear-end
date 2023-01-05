@@ -108,7 +108,7 @@ public class OssTemplate {
         log.info("============入参：{}", url);
         String path = url.substring(("https://" + bucketHost + "/").length());
         log.info("============path：{}", path);
-        ossDelete(bucket, Collections.singletonList(path));
+        ossDelete(bucket, Collections.singletonList(url));
     }
 
     /**

@@ -49,7 +49,7 @@ public class LectureService {
         newCourse.setIsDeleted(BigDecimal.valueOf(0));
         newCourse.setSchoolId(school_id);
         newCourse.setCourseOutline(outline);
-        CourseMapper.insert(newCourse);
+        CourseMapper.insertSelective(newCourse);
         return "True";
     }
 
@@ -138,11 +138,30 @@ public class LectureService {
 
     //2.2.1.4 section_info中增加学生
     public String addStudentInSecInfo(BigDecimal section_id,BigDecimal student_id,BigDecimal school_id){
-        SectionInfo newSecInfo = new SectionInfo();
-        newSecInfo.setSectionId(section_id);
-        newSecInfo.setStudentId(student_id);
-        newSecInfo.setSchoolId(school_id);
-        SectionInfoMapper.insertSelective(newSecInfo);
+        SectionInfoKey newKey = new SectionInfoKey();
+        newKey.setSectionId(section_id);
+        newKey.setStudentId(student_id);
+        newKey.setSchoolId(school_id);
+        if(SectionInfoMapper.selectByPrimaryKey(newKey)==null){
+            SectionInfo newSecInfo = new SectionInfo();
+            newSecInfo.setSectionId(section_id);
+            newSecInfo.setStudentId(student_id);
+            newSecInfo.setSchoolId(school_id);
+            SectionInfoMapper.insertSelective(newSecInfo);
+        }
+        else{
+            //查找需要删除的section_info
+            SectionInfoExample findSecInfo = new SectionInfoExample();
+            SectionInfoExample.Criteria criteria = findSecInfo.createCriteria();
+            criteria.andSectionIdEqualTo(section_id);
+            criteria.andSchoolIdEqualTo(school_id);
+            criteria.andStudentIdEqualTo(student_id);
+
+            //修改isdelete属性
+            SectionInfo delInfo = new SectionInfo();
+            delInfo.setIsDeleted(BigDecimal.valueOf(0));
+            SectionInfoMapper.updateByExampleSelective(delInfo,findSecInfo);
+        }
         return "True";
     }
 
@@ -228,6 +247,11 @@ public class LectureService {
     //2.4.2.1 教师下载报告
     public List<JSONObject> downloadReport(BigDecimal exp_id,BigDecimal stu_id,BigDecimal school_id){
         return ReportsMapper.selectUrlByReportKey(exp_id,stu_id,school_id);
+    }
+
+    //2.4.2.2 返回某实验下的报告列表
+    public List<JSONObject> getReportList(BigDecimal exp_id,BigDecimal school_id){
+        return ReportsMapper.selectReportList(exp_id,school_id);
     }
 
 }

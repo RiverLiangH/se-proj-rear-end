@@ -3,10 +3,9 @@ package com.evan.seprojrearend.controller;
 import com.evan.seprojrearend.common.JsonResult;
 import com.evan.seprojrearend.service.MarkService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
 
 @RestController
 @CrossOrigin
@@ -28,12 +27,12 @@ public class MarkController {
     }
 
     //4.2 查看报告成绩
-    @PostMapping("mark/check_report_mark")
-    public JsonResult checkReportMark(){
+    @GetMapping("mark/check_report_mark/{student_id}/{school_id}")
+    public JsonResult checkReportMark(@PathVariable BigDecimal student_id, @PathVariable BigDecimal school_id){
         String re = null;
-        //re = MarkService.setReportMark(exp_id,student_id,school_id,mark);
+        //re = MarkService.checkReportMark(student_id,school_id).toString();
         try {
-
+            re = MarkService.checkReportMark(student_id,school_id).toString();
         }catch (Exception e){
             return JsonResult.isError(10001,"未知错误");
         }
@@ -46,7 +45,7 @@ public class MarkController {
         String re = null;
         //re = MarkService.setReportMark(exp_id,student_id,school_id,mark);
         try {
-
+            //re = MarkService.checkReportMark()
         }catch (Exception e){
             return JsonResult.isError(10001,"未知错误");
         }
